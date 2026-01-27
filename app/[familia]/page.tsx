@@ -129,7 +129,7 @@ export default function InvitacionPage() {
           </h2>
           <div className="grid gap-10 md:grid-cols-2">
             <EventoInfo
-              tipo="Conferencia"
+              tipo="Consejos Biblicos"
               fecha="10 de Septiembre de 2027"
               hora="6:30 PM"
               lugar="Can Bonastre Wine Resort"

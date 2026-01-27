@@ -67,7 +67,7 @@ export default function Portada() {
           </button>
 
           <div className="bg-[#f7f3ee] text-[#5c4632] px-6 py-2 tracking-[0.25em] text-sm border-t border-b border-[#b08b5a]">
-            18 · 12 · 2025
+            28 · 06 · 2026
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 // EventoInfo.tsx
 type Props = {
-    tipo: 'Recepción' | 'Conferencia'
+    tipo: 'Recepción' | 'Consejos Biblicos'
     fecha: string
     hora: string
     lugar: string
