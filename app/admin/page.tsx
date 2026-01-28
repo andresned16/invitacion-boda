@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import Modal from '@/components/ui/Modal'
 import Decoracion from '@/components/ui/Decoracion';
@@ -38,7 +38,20 @@ type OrdenFiltro = 'reciente' | 'antiguo' | 'az' | 'za'
 
 
 export default function AdminPage() {
+    const scrollRef = useRef<HTMLDivElement | null>(null)
+    const [showHint, setShowHint] = useState(true)
 
+
+    const handleScroll = () => {
+        const el = scrollRef.current
+        if (!el) return
+
+        if (el.scrollLeft > 0) {
+            setShowHint(false) // 👈 apenas se mueve, desaparece
+        }
+    }
+
+    const [fadeOpacity, setFadeOpacity] = useState(1)
 
     const [seleccionadosAdmin, setSeleccionadosAdmin] = useState<string[]>([])
     const [saving, setSaving] = useState(false)
@@ -199,11 +212,13 @@ ${link}`;
         setFamiliaActiva(null)
     }
 
+
     // 🔐 LOGIN
     if (!autorizado) {
         return (
             <Decoracion>
-                <main className="min-h-screen flex items-center justify-cent p-6">
+                <main className="min-h-screen flex items-center justify-center p-6">
+
                     <form
                         className="w-full max-w-sm bg-white p-6 rounded-xl shadow-sm border"
                         onSubmit={(e) => {
@@ -476,6 +491,9 @@ ${link}`;
         orden !== 'reciente';
 
 
+
+
+
     return (
         <Decoracion>
             <main className="min-h-screen p-6 max-w-5xl mx-auto">
@@ -607,22 +625,22 @@ ${link}`;
                             </div>
                         </div>
 
-                        {/* 🥧 GRÁFICA */}
-                        <div className="w-full md:w-1/2 h-64 flex flex-col items-center">
-                            <h2 className="text-lg font-semibold text-center mb-2">
+                        {/* 🥧 GRÁFICA + LEYENDA */}
+                        <div className="w-full md:w-1/2 flex flex-col items-center">
+                            <h2 className="text-lg font-semibold text-center mb-3">
                                 Estado de confirmaciones
                             </h2>
 
                             {/* Gráfica */}
-                            <div className="w-full flex-1">
+                            <div className="w-full h-52 min-[355px]:h-56">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie
                                             data={chartData}
                                             dataKey="value"
                                             nameKey="name"
-                                            innerRadius={60}
-                                            outerRadius={90}
+                                            innerRadius={36}
+                                            outerRadius={70}
                                         >
                                             {chartData.map((_, index) => (
                                                 <Cell key={index} fill={COLORS[index]} />
@@ -633,30 +651,34 @@ ${link}`;
                                 </ResponsiveContainer>
                             </div>
 
-                            {/* Legend personalizado */}
-                            <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
+                            {/* Leyenda */}
+                            <div
+                                className="
+          flex flex-col items-start gap-2
+          min-[355px]:flex-row
+          min-[355px]:items-center
+          min-[355px]:justify-center
+          min-[355px]:gap-6
+          mt-4 text-sm
+        "
+                            >
                                 {chartData.map((item, index) => (
-                                    <div
-                                        key={item.name}
-                                        className="flex items-center gap-2"
-                                    >
+                                    <div key={item.name} className="flex items-center gap-2">
                                         <span
                                             className="w-3 h-3 rounded-full"
                                             style={{ backgroundColor: COLORS[index] }}
                                         />
                                         <span className="text-gray-700">
-                                            {item.name}
-                                            ({item.value})
+                                            {item.name} ({item.value})
                                         </span>
                                     </div>
                                 ))}
                             </div>
-
                         </div>
-
 
                     </div>
                 </div>
+
 
 
                 {/* PANEL DE FILTROS */}
@@ -766,20 +788,36 @@ ${link}`;
 
                 {/* TABLA */}
 
-                {/* Indicador de scroll (solo móvil) */}
+                {/* Indicador móvil */}
                 <div className="md:hidden text-sm text-gray-500 mb-2 flex items-center gap-2">
                     <span>⬅️➡️</span>
                     <span>Desliza horizontalmente para ver más</span>
                 </div>
 
-                {/* TABLA */}
-                <div className="relative overflow-x-auto border rounded-lg">
+                {/* CONTENEDOR SCROLL */}
+                <div
+                    ref={scrollRef}
+                    onScroll={handleScroll}
+                    className="relative overflow-x-auto border rounded-lg"
+                >
+                    {/* Indicador visual SOLO antes del scroll */}
+                    {showHint && (
+                        <div
+                            className="
+        pointer-events-none
+        absolute top-0 right-0
+        h-full w-10
+        md:hidden
+        bg-gradient-to-l
+        from-stone-50
+        to-transparent
+      "
+                        />
+                    )}
 
-                    {/* Degradado derecho (indica más contenido) */}
-                    <div className="pointer-events-none absolute top-0 right-0 h-full w-8 
-                    bg-gradient-to-l from-white to-transparent md:hidden" />
 
-                    <table className="min-w-[900px] border-collapse">
+
+                    <table className="min-w-[900px] bg-stone-50 border-collapse">
                         <thead className="bg-gray-100 text-sm">
                             <tr>
                                 <th className="p-3 text-center">Familia</th>
@@ -819,9 +857,6 @@ ${link}`;
                                         )}
                                     </td>
 
-
-
-
                                     <td className="p-3 text-center">
                                         {f.invitados_posibles.length}
                                     </td>
@@ -853,6 +888,7 @@ ${link}`;
                         </tbody>
                     </table>
                 </div>
+
 
 
                 <div className="flex justify-center items-center gap-2 mt-4">
