@@ -19,7 +19,7 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
     const userTimezone =
         Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    // 🔹 Cargar fecha + timezone del evento
+    /* 🔹 Cargar fecha límite */
     useEffect(() => {
         const loadConfig = async () => {
             const { data } = await supabase
@@ -105,100 +105,181 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
 
     return (
         <section className="py-20 px-6">
-            <div className="relative max-w-md mx-auto bg-[#faf7f2] border-2 border-dashed border-[#b08b5a] p-8">
+            <div
+                className="
+          relative mx-auto bg-white border border-[#b08b5a]
+          rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+          max-w-md md:max-w-4xl
+          md:grid md:grid-cols-[260px_1fr]
+        "
+            >
+                {/* ✂️ Cortes */}
+                {/* Mobile */}
+                <span className="md:hidden absolute -left-3 top-1/2 w-6 h-6 bg-[#f7f3ee] rounded-full" />
+                <span className="md:hidden absolute -right-3 top-1/2 w-6 h-6 bg-[#f7f3ee] rounded-full" />
 
-                {/* 🎫 Cortes */}
-                <span className="absolute -left-3 top-1/2 w-6 h-6 bg-[#f7f3ee] rounded-full" />
-                <span className="absolute -right-3 top-1/2 w-6 h-6 bg-[#f7f3ee] rounded-full" />
+                {/* Desktop */}
+                <span className="hidden md:block absolute left-1/2 -top-3 w-6 h-6 bg-[#f7f3ee] rounded-full" />
+                <span className="hidden md:block absolute left-1/2 -bottom-3 w-6 h-6 bg-[#f7f3ee] rounded-full" />
 
-                {/* Header */}
-                <div className="text-center mb-4">
-                    <p className="text-xs tracking-widest text-[#7a5c3e]">
-                        WEDDING FLIGHT
+                {/* 🟥 LADO IZQUIERDO */}
+                <div
+                    className="
+            p-8 text-center bg-[#f99285] text-[#f7f3ee]
+            rounded-t-2xl
+            md:rounded-t-none md:rounded-l-2xl
+          "
+                >
+                    <p className="text-xs tracking-[0.3em] opacity-90 mb-2 uppercase">
+                        Vuelo de boda
                     </p>
-                    <h2 className="text-2xl font-serif text-[#5c4632]">
-                        Confirmación de Asistencia
+
+                    <h2 className="text-2xl font-serif mb-4">
+                        Confirmación
                     </h2>
+
+                    {fechaLimiteUTC && !confirmacionesCerradas && (
+                        <div className="text-sm space-y-1 opacity-95">
+                            <p className="font-semibold">
+                                {formatDate(fechaLimiteUTC, timezoneEvento)}
+                            </p>
+
+                            {!mismaZona && (
+                                <p className="text-xs opacity-80">
+                                    En tu zona horaria:
+                                    <br />
+                                    {formatDate(fechaLimiteUTC, userTimezone)}
+                                </p>
+                            )}
+                        </div>
+                    )}
+
+                    {confirmacionesCerradas && (
+                        <p className="mt-4 font-semibold text-sm">
+                            ⛔ Confirmación cerrada
+                        </p>
+                    )}
                 </div>
 
-                {/* ⏰ Fecha límite */}
-                {fechaLimiteUTC && !confirmacionesCerradas && (
-                    <div className="mb-4 text-center text-sm text-[#7a5c3e] space-y-1">
-                        <p>
-                            ⏰ Confirmación disponible hasta:
-                            <br />
-                            <strong>
-                                {formatDate(fechaLimiteUTC, timezoneEvento)}
-                            </strong>{' '}
-                            
-                        </p>
+                {/* 🤍 LADO DERECHO */}
+                <div className="relative p-8 overflow-hidden md:rounded-r-2xl">
 
-                        {!mismaZona && (
-                            <p className="text-xs opacity-80">
-                                En tu zona horaria:
-                                <br />
-                                {formatDate(fechaLimiteUTC, userTimezone)}
-                            </p>
-                        )}
-                    </div>
-                )}
+                    {/* Fondo avión */}
+                    <div
+                        className="
+                        absolute inset-6
+                        bg-[url('/images/avionBg.png')]
+                        bg-center bg-no-repeat bg-contain
+                        opacity-20
+                        pointer-events-none
+                        "
+                    />
 
-                {confirmacionesCerradas && (
-                    <p className="mb-6 text-center text-rose-600 font-semibold">
-                        ⛔ El plazo para confirmar asistencia ha finalizado
-                    </p>
-                )}
+                    <div className="relative z-10">
 
-                <div className="h-px border-t border-dashed border-[#b08b5a] mb-6" />
+                        {/* GRID solo en desktop */}
+                        <div className="md:grid md:grid-cols-[1fr_120px] md:gap-6">
 
-                {/* Invitados */}
-                {!confirmacionesCerradas && (
-                    <>
-                        <p className="mb-4 text-sm tracking-wider text-[#7a5c3e]">
-                            PASSENGERS
-                        </p>
+                            {/* 🧾 CONTENIDO */}
+                            <div>
+                                {!confirmacionesCerradas && (
+                                    <>
+                                        <p className="mb-6 text-xs tracking-[0.3em] uppercase text-[#8b6a4a] font-semibold">
+                                            Pasajeros
+                                        </p>
 
-                        {familia.invitados_posibles.map((nombre) => (
-                            <label
-                                key={nombre}
-                                className="flex items-center gap-3 mb-3 text-[#3b2f24]"
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={seleccionados.includes(nombre)}
-                                    onChange={() => toggleInvitado(nombre)}
-                                    disabled={confirmadoLocal}
+                                        {familia.invitados_posibles.map((nombre) => (
+                                            <label
+                                                key={nombre}
+                                                className="
+                flex items-center gap-4 mb-4
+                rounded-lg px-3 py-2
+                border border-[#e6d8c7]
+                hover:bg-[#faf7f2]
+                transition
+                text-[#5c4632]
+              "
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={seleccionados.includes(nombre)}
+                                                    onChange={() => toggleInvitado(nombre)}
+                                                    disabled={confirmadoLocal}
+                                                    className="accent-[#5c4632] scale-110"
+                                                />
+                                                <span className="font-serif text-base tracking-wide">
+                                                    {nombre}
+                                                </span>
+                                            </label>
+                                        ))}
+
+                                        <div className="my-6 border-t border-dashed border-[#d8c4aa]" />
+                                    </>
+                                )}
+
+                                {!confirmadoLocal && !confirmacionesCerradas && (
+                                    <button
+                                        onClick={confirmar}
+                                        disabled={guardando}
+                                        className="
+            mt-6 w-full bg-[#5c4632]
+            hover:bg-[#4a3829]
+            transition
+            text-white py-3
+            tracking-[0.25em]
+            text-xs rounded-lg
+          "
+                                    >
+                                        {guardando ? 'CONFIRMANDO…' : 'CONFIRMAR ASISTENCIA'}
+                                    </button>
+                                )}
+
+                                {/* 📱 CODEBAR HORIZONTAL (MOBILE) */}
+                                <img
+                                    src="/images/codebar2.png"
+                                    alt="Código de barras"
+                                    className="
+    mt-6
+    w-full
+    md:hidden
+    opacity-80
+    object-contain
+  "
                                 />
-                                <span className="font-medium">{nombre}</span>
-                            </label>
-                        ))}
-                    </>
-                )}
 
-                {/* Botón */}
-                {!confirmadoLocal && !confirmacionesCerradas && (
-                    <button
-                        onClick={confirmar}
-                        disabled={guardando}
-                        className="mt-6 w-full bg-[#5c4632] text-white py-3 tracking-widest text-sm rounded"
-                    >
-                        {guardando ? 'CHECKING IN…' : 'CHECK-IN'}
-                    </button>
-                )}
 
-                {/* Error */}
-                {error && (
-                    <p className="mt-4 text-rose-600 text-center font-medium">
-                        {error}
-                    </p>
-                )}
 
-                {/* Confirmado */}
-                {confirmadoLocal && (
-                    <p className="mt-6 text-green-700 font-semibold text-center tracking-wider">
-                        ✔ BOARDING CONFIRMED
-                    </p>
-                )}
+
+                                {error && (
+                                    <p className="mt-4 text-rose-600 text-center font-medium">
+                                        {error}
+                                    </p>
+                                )}
+
+                                {confirmadoLocal && (
+                                    <p className="mt-6 text-green-700 font-semibold text-center tracking-wider">
+                                        ✔ ASISTENCIA CONFIRMADA
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* 🖥️ CODEBAR VERTICAL (DESKTOP) */}
+                            <div className="hidden md:flex items-start justify-center">
+                                <img
+                                    src="/images/codebar.png"
+                                    alt="Código de barras"
+                                    className="
+          h-[260px]
+          opacity-80
+        "
+                                />
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </section>
     )

@@ -124,21 +124,31 @@ export default function InvitacionPage() {
         <Historia familia={familia} />
 
         <section className="py-20 bg-[#f7f3ee]">
-          <h2 className="text-4xl font-kingsguard mb-6 text-[#7a5c3e]">
+          <h2 className="text-4xl font-kingsguard mb-10 text-[#7a5c3e]">
             Destinos
           </h2>
-          <div className="grid gap-10 md:grid-cols-2">
+
+          <div className="flex justify-center">
             <EventoInfo
-              tipo="Consejos Biblicos"
-              fecha="10 de Septiembre de 2027"
-              hora="6:30 PM"
-              lugar="Can Bonastre Wine Resort"
-            />
-            <EventoInfo
-              tipo="Recepción"
-              fecha="10 de Septiembre de 2027"
-              hora="4:00 PM"
-              lugar="Santa María Reina del Pedralbes"
+              eventos={[
+                {
+                  titulo: 'Consejos Biblicos',
+                  fecha: '28 de Junio de 2026',
+                  hora: '2:30 PM',
+                  lugar:
+                    'Salón del Reino de los Testigos de Jehová, Barrio Profesionales. Cl. 5 Nte. #1718, Armenia, Quindío',
+                  ubicacionUrl:
+                    'https://maps.app.goo.gl/mAv57uoMru9iaV2J9',
+                },
+                {
+                  titulo: 'Recepción',
+                  fecha: '28 de Junio de 2026',
+                  hora: '5:00 PM',
+                  lugar: 'Km 2 Vía al Caimo, Villa Juliana, Armenia, Quindío',
+                  ubicacionUrl:
+                    'https://maps.app.goo.gl/y2Bpkje5uFEwBgfD8',
+                },
+              ]}
             />
           </div>
         </section>

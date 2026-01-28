@@ -49,7 +49,7 @@ export default function Countdown({ fecha }: { fecha: string }) {
     return (
         <section className="py-20 max-[440px]:py-14 text-center bg-[#f7f3ee]">
 
-            <h2 className="mb-10 text-3xl font-script text-[#7a5c3e]">
+            <h2 className="text-4xl font-kingsguard mb-10 text-[#7a5c3e]">
                 ¡Faltan pocos días!
             </h2>
 
