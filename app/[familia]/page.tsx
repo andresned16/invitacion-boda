@@ -132,7 +132,7 @@ export default function InvitacionPage() {
             <EventoInfo
               eventos={[
                 {
-                  titulo: 'Consejos Biblicos',
+                  titulo: 'Conferencia Biblica',
                   fecha: '28 de Junio de 2026',
                   hora: '2:30 PM',
                   lugar:
