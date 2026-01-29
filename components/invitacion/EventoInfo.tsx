@@ -1,7 +1,6 @@
 // EventoInfo.tsx
 type Evento = {
     titulo: 'Conferencia Biblica' | 'Recepción'
-    fecha: string
     hora: string
     lugar: string
     ubicacionUrl: string
@@ -74,7 +73,7 @@ export default function EventoInfo({ eventos }: Props) {
                             {/* CONTENIDO */}
                             <div className="relative z-10">
                                 {/* TÍTULO */}
-                                <h3 className="text-center text-xl tracking-widest font-serif text-[#5c4632] mb-2 font-krylon">
+                                <h3 className="text-center text-xl tracking-widest font-serif text-[#5c4632] mb-2 font-bentinck">
                                     {evento.titulo.toUpperCase()}
                                 </h3>
 
@@ -89,22 +88,16 @@ export default function EventoInfo({ eventos }: Props) {
 
                                 {/* INFO */}
                                 <ul className="space-y-3 text-left text-sm text-[#3b2f24]">
-                                    <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-krylon">
-                                            Fecha
-                                        </span>
-                                        <span>{evento.fecha}</span>
-                                    </li>
 
                                     <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-krylon">
+                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-bentinck">
                                             Hora
                                         </span>
                                         <span>{evento.hora}</span>
                                     </li>
 
                                     <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-krylon">
+                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-bentinck">
                                             Lugar
                                         </span>
                                         <span>{evento.lugar}</span>
@@ -127,7 +120,7 @@ export default function EventoInfo({ eventos }: Props) {
                                             tracking-wider
                                             hover:opacity-90
                                             transition
-                                            font-krylon
+                                            font-bentinck
                                         "
                                     >
                                         Ver ubicación

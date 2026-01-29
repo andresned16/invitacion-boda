@@ -13,6 +13,8 @@ import EventoInfo from '@/components/invitacion/EventoInfo'
 import Countdown from '@/components/invitacion/Countdown'
 import Confirmacion from '@/components/invitacion/Confirmacion'
 import Itinerario from '@/components/invitacion/Itinerario'
+import Fecha from '@/components/invitacion/Fecha'
+
 
 export type Familia = {
   id: string
@@ -123,26 +125,46 @@ export default function InvitacionPage() {
 
         <Historia familia={familia} />
 
+        <Fecha />
+
+
+        <Countdown fecha="2026-06-28T14:30:00" />
+        {/* 🌸 Separador panorámico */}
+        <div
+          className="
+    w-full
+    h-[80px]
+    md:h-[110px]
+    lg:h-[140px]
+    bg-center
+    bg-no-repeat
+    bg-contain
+    my-10
+  "
+          style={{
+            backgroundImage: "url('/images/floresPano.png')",
+          }}
+        />
+
         <section className="py-20 bg-[#f7f3ee]">
-          <h2 className="text-4xl font-kingsguard mb-10 text-[#7a5c3e]">
+          <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
             Destinos
           </h2>
 
-          <div className="flex justify-center font-krylon">
+          <div className="flex justify-center font-bentinck">
+
             <EventoInfo
               eventos={[
                 {
                   titulo: 'Conferencia Biblica',
-                  fecha: '28 de Junio de 2026',
                   hora: '2:30 PM',
                   lugar:
-                    'Salón del Reino de los Testigos de Jehová, Barrio Profesionales. Cl. 5 Nte. #1718, Armenia, Quindío',
+                    'Salón del Reino de los Testigos de Jehová, Barrio Profesionales. Cl. 5 Nte. #17-18, Armenia, Quindío',
                   ubicacionUrl:
                     'https://maps.app.goo.gl/mAv57uoMru9iaV2J9',
                 },
                 {
                   titulo: 'Recepción',
-                  fecha: '28 de Junio de 2026',
                   hora: '5:00 PM',
                   lugar: 'Km 2 Vía al Caimo, Villa Juliana, Armenia, Quindío',
                   ubicacionUrl:
@@ -151,14 +173,16 @@ export default function InvitacionPage() {
               ]}
             />
           </div>
+
         </section>
 
-        <Countdown fecha="2026-06-28T14:30:00" />
+
 
         <Confirmacion familia={familia} />
 
         <Itinerario />
       </div>
+
     </Decoracion>
   )
 }

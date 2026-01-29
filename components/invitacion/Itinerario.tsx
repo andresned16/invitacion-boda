@@ -13,7 +13,7 @@ export default function Itinerario() {
 
     return (
         <section className="py-20 px-6 bg-[#f7f3ee]">
-            <h2 className="text-center text-4xl font-kingsguard mb-16 text-[#7a5c3e]">
+            <h2 className="text-center text-5xl font-kingsguard mb-16 text-[#7a5c3e]">
                 Itinerario
             </h2>
 

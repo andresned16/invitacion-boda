@@ -1,14 +1,14 @@
 import localFont from 'next/font/local'
 
-export const krylon = localFont({
+export const bentinck = localFont({
   src: [
     {
-      path: '../public/fonts/Krylon-Regular.woff2',
+      path: '../public/fonts/Bentinck-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
   ],
-  variable: '--font-krylon',
+  variable: '--font-bentinck',
 })
 
 export const kingsguard = localFont({
@@ -20,4 +20,15 @@ export const kingsguard = localFont({
     },
   ],
   variable: '--font-kingsguard',
+})
+
+export const dancingScript = localFont({
+  src: [
+    {
+      path: '../public/fonts/DancingScript-Bold.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-dancingScript',
 })

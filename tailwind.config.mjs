@@ -7,7 +7,7 @@ const tailwindConfig = {
   theme: {
    extend: {
   fontFamily: {
-  krylon: ['var(--font-krylon)'],
+  bentinck: ['var(--font-bentinck)'],
   kingsguard: ['var(--font-kingsguard)'],
 },
 

@@ -15,7 +15,7 @@ export default function Historia({ familia }: { familia: Familia }) {
             </h1>
 
 
-            <p className="text-base md:text-lg mb-10 text-[#3b2f24] leading-relaxed font-krylon">
+            <p className="text-base md:text-lg mb-10 text-[#3b2f24] leading-relaxed font-bentinck">
                 {esFamilia ? (
                     <>
                         En esta invitación queremos extenderles una cariñosa invitación
@@ -30,11 +30,11 @@ export default function Historia({ familia }: { familia: Familia }) {
             </p>
 
             {/* Historia */}
-            <h2 className="text-4xl font-kingsguard mb-6 text-[#7a5c3e]">
+            <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
                 Nuestra historia
             </h2>
 
-            <p className="text-lg leading-relaxed text-[#3b2f24] font-krylon">
+            <p className="text-lg leading-relaxed text-[#3b2f24] font-bentinck">
                 Todo comenzó cuando...
             </p>
         </section>

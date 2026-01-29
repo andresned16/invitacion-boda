@@ -30,10 +30,12 @@
 .font-kingsguard {
   font-family: var(--font-kingsguard), cursive;
 }
-.font-krylon {
-  font-family: var(--font-krylon), regular;
+.font-bentinck {
+  font-family: var(--font-bentinck), regular;
 }
-
+.font-dancingScript {
+  font-family: var(--font-dancingScript), regular;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
