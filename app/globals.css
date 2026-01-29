@@ -26,10 +26,13 @@
 }
 
 
+
 .font-kingsguard {
   font-family: var(--font-kingsguard), cursive;
 }
-
+.font-rosaline {
+  font-family: var(--font-rosaline);
+}
 
 :root {
   --background: #ffffff;
@@ -83,9 +86,6 @@ body {
   
 }
 
-.font-kingsguard {
-  font-family: var(--font-kingsguard);
-}
 
 
 

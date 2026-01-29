@@ -1,11 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 const tailwindConfig = {
   content: [
-    './app/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+   extend: {
+  fontFamily: {
+  rosaline: ['var(--font-rosaline)'],
+  kingsguard: ['var(--font-kingsguard)'],
+},
+
+},
+
   },
   plugins: [],
 }

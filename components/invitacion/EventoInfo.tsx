@@ -74,7 +74,7 @@ export default function EventoInfo({ eventos }: Props) {
                             {/* CONTENIDO */}
                             <div className="relative z-10">
                                 {/* TÍTULO */}
-                                <h3 className="text-center text-xl tracking-widest font-serif text-[#5c4632] mb-2">
+                                <h3 className="text-center text-xl tracking-widest font-serif text-[#5c4632] mb-2 font-rosaline">
                                     {evento.titulo.toUpperCase()}
                                 </h3>
 
@@ -90,21 +90,21 @@ export default function EventoInfo({ eventos }: Props) {
                                 {/* INFO */}
                                 <ul className="space-y-3 text-left text-sm text-[#3b2f24]">
                                     <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider">
+                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-rosaline">
                                             Fecha
                                         </span>
                                         <span>{evento.fecha}</span>
                                     </li>
 
                                     <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider">
+                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-rosaline">
                                             Hora
                                         </span>
                                         <span>{evento.hora}</span>
                                     </li>
 
                                     <li className="flex gap-2">
-                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider">
+                                        <span className="w-20 text-[#7a5c3e] uppercase tracking-wider font-rosaline">
                                             Lugar
                                         </span>
                                         <span>{evento.lugar}</span>
@@ -127,6 +127,7 @@ export default function EventoInfo({ eventos }: Props) {
                                             tracking-wider
                                             hover:opacity-90
                                             transition
+                                            font-rosaline
                                         "
                                     >
                                         Ver ubicación

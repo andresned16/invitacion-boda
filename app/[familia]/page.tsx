@@ -128,7 +128,7 @@ export default function InvitacionPage() {
             Destinos
           </h2>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center font-rosaline">
             <EventoInfo
               eventos={[
                 {

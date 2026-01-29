@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import localFont from "next/font/local"
 import "./globals.css"
+import { rosaline, kingsguard } from './fonts'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,22 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-const kingsguard = localFont({
-  src: [
-    {
-      path: "./fonts/KingsguardCalligraphyPERSONA-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/KingsguardCalligraphyPERSONA-Regular.woff",
-      weight: "400",
-      style: "normal",
-    },
-  ],
-  variable: "--font-kingsguard",
-  display: "swap",
-})
+
 
 
 export const metadata: Metadata = {
@@ -47,6 +32,7 @@ export default function RootLayout({
         className={`
           ${geistSans.variable}
           ${geistMono.variable}
+          ${rosaline.variable}
           ${kingsguard.variable}
           antialiased
        
