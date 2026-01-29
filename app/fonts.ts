@@ -1,14 +1,14 @@
 import localFont from 'next/font/local'
 
-export const rosaline = localFont({
+export const krylon = localFont({
   src: [
     {
-      path: '../public/fonts/Rosaline-Regular.woff2',
+      path: '../public/fonts/Krylon-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
   ],
-  variable: '--font-rosaline',
+  variable: '--font-krylon',
 })
 
 export const kingsguard = localFont({

@@ -134,7 +134,7 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
                         Vuelo de boda
                     </p>
 
-                    <h2 className="text-2xl font-serif mb-4">
+                    <h2 className="text-2xl font-serif mb-4 font-krylon">
                         Confirmación
                     </h2>
 

@@ -30,8 +30,8 @@
 .font-kingsguard {
   font-family: var(--font-kingsguard), cursive;
 }
-.font-rosaline {
-  font-family: var(--font-rosaline);
+.font-krylon {
+  font-family: var(--font-krylon), regular;
 }
 
 :root {

@@ -7,7 +7,7 @@ const tailwindConfig = {
   theme: {
    extend: {
   fontFamily: {
-  rosaline: ['var(--font-rosaline)'],
+  krylon: ['var(--font-krylon)'],
   kingsguard: ['var(--font-kingsguard)'],
 },
 
