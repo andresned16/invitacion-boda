@@ -159,6 +159,23 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
                             ⛔ Confirmación cerrada
                         </p>
                     )}
+                    {/* Imagen maleta y cámara */}
+                    <img
+                        src="/images/maletaycamara.png"
+                        alt="Maleta y cámara"
+                        className="
+        mt-6
+        mx-auto
+        w-24
+        md:w-28
+        object-contain
+        opacity-90
+        pointer-events-none
+    "
+                    />
+
+
+
                 </div>
 
                 {/* 🤍 LADO DERECHO */}
