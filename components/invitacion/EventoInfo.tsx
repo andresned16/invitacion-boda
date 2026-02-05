@@ -143,9 +143,13 @@ export default function EventoInfo({ eventos }: Props) {
                 })}
 
                 {/* RSVP DECORATIVO */}
-                <div className="absolute bottom-4 right-4 w-14 h-14 rounded-full border-2 border-[#b08b5a] flex items-center justify-center text-xs text-[#b08b5a] rotate-[-12deg]">
-                    RSVP
+                <div
+                    className="absolute bottom-4 right-4 w-14 h-14 rounded-full border-2 border-[#b08b5a] flex items-center justify-center text-xs text-[#b08b5a] rotate-[-12deg] font-kingsguard"
+                    style={{ textShadow: '0 0 1px #b08b5a' }}
+                >
+                    K&A
                 </div>
+
             </div>
         </div>
     )
