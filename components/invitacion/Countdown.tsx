@@ -48,14 +48,33 @@ export default function Countdown({ fecha }: { fecha: string }) {
     }
 
     return (
-        <section className="py-20 max-[440px]:py-14 text-center bg-[#f7f3ee] overflow-hidden">
-            <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
-                ¡Faltan pocos días!
-            </h2>
+        <section className="relative py-20 max-[440px]:py-14 text-center bg-[#f7f3ee] overflow-hidden">
 
-            <div className="flex justify-center">
+            {/* Fondo polvo responsive */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
                     className="
+                    w-[78%] h-[78%]
+                    sm:w-[65%] sm:h-[65%]
+                    bg-center
+                    bg-contain
+                    bg-no-repeat
+                    opacity-40
+                    bg-[url('/images/polvoMobile.png')]
+                    sm:bg-[url('/images/polvo.png')]
+                "
+                />
+            </div>
+
+            {/* Contenido */}
+            <div className="relative z-10">
+                <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
+                    ¡Faltan pocos días!
+                </h2>
+
+                <div className="flex justify-center">
+                    <div
+                        className="
                         flex
                         flex-nowrap
                         items-center
@@ -65,18 +84,21 @@ export default function Countdown({ fecha }: { fecha: string }) {
                         max-[440px]:scale-[0.75]
                         max-[380px]:scale-[0.65]
                     "
-                >
-                    <TimeBox value={time.d} label="DÍAS" />
-                    <Separator />
-                    <TimeBox value={time.h} label="HORAS" />
-                    <Separator />
-                    <TimeBox value={time.m} label="MINUTOS" />
-                    <Separator />
-                    <TimeBox value={time.s} label="SEGUNDOS" />
+                    >
+                        <TimeBox value={time.d} label="DÍAS" />
+                        <Separator />
+                        <TimeBox value={time.h} label="HORAS" />
+                        <Separator />
+                        <TimeBox value={time.m} label="MINUTOS" />
+                        <Separator />
+                        <TimeBox value={time.s} label="SEGUNDOS" />
+                    </div>
                 </div>
             </div>
         </section>
     )
+
+
 }
 
 function TimeBox({ value, label }: { value: number; label: string }) {
