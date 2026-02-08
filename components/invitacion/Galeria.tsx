@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import gsap from 'gsap'
 
 export default function Galeria() {
@@ -9,6 +10,7 @@ export default function Galeria() {
   const pasaporteRef = useRef<HTMLImageElement>(null)
   const camaraRef = useRef<HTMLImageElement>(null)
   const brujulaRef = useRef<HTMLImageElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
 
   const images = [
     "/images/gallery/foto1.jpeg",
@@ -17,10 +19,8 @@ export default function Galeria() {
   ]
 
   const [index, setIndex] = useState(0)
-  const imageRef = useRef<HTMLImageElement>(null)
 
-
-  // 🎬 Animaciones iconos
+  /* 🎬 Animaciones iconos */
   useEffect(() => {
 
     gsap.to(avionRef.current, {
@@ -58,8 +58,10 @@ export default function Galeria() {
 
   }, [])
 
-  // 🎬 Fade animación al cambiar imagen
+  /* 🎬 Fade animación al cambiar imagen */
   useEffect(() => {
+    if (!imageRef.current) return
+
     gsap.fromTo(
       imageRef.current,
       { opacity: 0, scale: 1.05 },
@@ -67,28 +69,25 @@ export default function Galeria() {
     )
   }, [index])
 
-  // ⏱ Auto cambio cada 5s
-// ⏱ Auto cambio cada 5s
-useEffect(() => {
-  const interval = setInterval(() => {
-    setIndex((prev) => (prev + 1) % images.length)
-  }, 5000)
+  /* ⏱ Auto cambio cada 5s */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex(prev => (prev + 1) % images.length)
+    }, 5000)
 
-  return () => clearInterval(interval)
-}, [])
-
-
+    return () => clearInterval(interval)
+  }, [])
 
   const nextImage = () => {
-    setIndex((prev) => (prev + 1) % images.length)
+    setIndex(prev => (prev + 1) % images.length)
   }
 
   const prevImage = () => {
-    setIndex((prev) => (prev - 1 + images.length) % images.length)
+    setIndex(prev => (prev - 1 + images.length) % images.length)
   }
 
   return (
-    <section className="py-16 px-6 max-w-6xl mx-auto text-center">
+    <section className="py-12 md:py-16 px-4 md:px-6 max-w-6xl mx-auto text-center">
 
       <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
         Galería
@@ -98,9 +97,10 @@ useEffect(() => {
         Algunos de nuestros mejores momentos
       </p>
 
-      <div className="relative mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      {/* CONTENEDOR MARCO */}
+      <div className="relative mx-auto w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl">
 
-        {/* 📸 IMAGEN DINÁMICA DETRÁS DEL MARCO */}
+        {/* 📸 IMAGEN DETRÁS DEL MARCO */}
         <div className="absolute inset-[12%] overflow-hidden rounded-md z-0">
           <img
             ref={imageRef}
@@ -110,29 +110,57 @@ useEffect(() => {
           />
         </div>
 
-        {/* 🖼 Fondo Marco */}
+        {/* 🖼 MARCO */}
         <img
           src="/images/fondoGaleria.png"
           alt="Fondo galería"
           className="w-full h-auto block relative z-10"
         />
 
-        {/* Flechas */}
-        <button
-          onClick={prevImage}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/70 px-3 py-1 rounded-full shadow"
-        >
-          ←
-        </button>
+        {/* 💻 Flechas laterales (solo desktop) */}
+        <div className="hidden md:block">
 
-        <button
-          onClick={nextImage}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/70 px-3 py-1 rounded-full shadow"
-        >
-          →
-        </button>
+          {/* IZQUIERDA */}
+          <button
+            onClick={prevImage}
+            className="
+              absolute
+              md:-left-16 lg:-left-24
+              top-1/2 -translate-y-1/2
+              z-30
+              bg-white/85 backdrop-blur
+              p-2
+              rounded-full
+              shadow-md
+              hover:scale-110 active:scale-95
+              transition
+            "
+          >
+            <ChevronLeft size={20} />
+          </button>
 
-        {/* Iconos encima */}
+          {/* DERECHA */}
+          <button
+            onClick={nextImage}
+            className="
+              absolute
+              md:-right-16 lg:-right-24
+              top-1/2 -translate-y-1/2
+              z-30
+              bg-white/85 backdrop-blur
+              p-2
+              rounded-full
+              shadow-md
+              hover:scale-110 active:scale-95
+              transition
+            "
+          >
+            <ChevronRight size={20} />
+          </button>
+
+        </div>
+
+        {/* ICONOS DECORATIVOS */}
         <img
           ref={pasaporteRef}
           src="/images/pasaporte.png"
@@ -162,6 +190,24 @@ useEffect(() => {
         />
 
       </div>
+
+      {/* 📱 Flechas debajo (solo móvil) */}
+      <div className="flex justify-center gap-6 mt-6 md:hidden">
+        <button
+          onClick={prevImage}
+          className="bg-white/85 backdrop-blur p-3 rounded-full shadow-md hover:scale-110 active:scale-95 transition"
+        >
+          <ChevronLeft size={26} />
+        </button>
+
+        <button
+          onClick={nextImage}
+          className="bg-white/85 backdrop-blur p-3 rounded-full shadow-md hover:scale-110 active:scale-95 transition"
+        >
+          <ChevronRight size={26} />
+        </button>
+      </div>
+
     </section>
   )
 }
