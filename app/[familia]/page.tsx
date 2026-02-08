@@ -17,6 +17,7 @@ import Fecha from '@/components/invitacion/Fecha'
 import Vestimenta from '@/components/invitacion/Vestimenta'
 import Sobres from '@/components/invitacion/Sobres'
 import FotosGoogle from '@/components/invitacion/FotosGoogle'
+import Galeria from '@/components/invitacion/Galeria'
 
 
 export type Familia = {
@@ -218,6 +219,7 @@ export default function InvitacionPage() {
         <Sobres />
 
         <FotosGoogle />
+        <Galeria />
       </div>
 
     </Decoracion>

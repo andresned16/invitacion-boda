@@ -61,7 +61,7 @@ export default function FotosGoogle() {
         <section className="py-20 px-6 max-w-3xl mx-auto text-center">
             
             <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
-                Fotos
+                Fotos y Videos
             </h2>
 
             <div className="flex justify-center mb-8">
