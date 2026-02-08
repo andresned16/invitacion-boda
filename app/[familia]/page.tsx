@@ -14,6 +14,9 @@ import Countdown from '@/components/invitacion/Countdown'
 import Confirmacion from '@/components/invitacion/Confirmacion'
 import Itinerario from '@/components/invitacion/Itinerario'
 import Fecha from '@/components/invitacion/Fecha'
+import Vestimenta from '@/components/invitacion/Vestimenta'
+import Sobres from '@/components/invitacion/Sobres'
+import FotosGoogle from '@/components/invitacion/FotosGoogle'
 
 
 export type Familia = {
@@ -175,12 +178,46 @@ export default function InvitacionPage() {
           </div>
 
         </section>
-
+        <Vestimenta />
+        {/* ✨ Línea separadora */}
+        <div className="flex justify-center my-8 md:my-8">
+          <img
+            src="/images/linea.png"
+            alt="Separador"
+            className="
+      w-56
+      md:w-72
+      lg:w-96
+      opacity-90
+    "
+          />
+        </div>
 
 
         <Confirmacion familia={familia} />
 
         <Itinerario />
+
+        {/* 🌸 Separador floral */}
+        <div
+          className="
+    w-full
+    h-[100px]
+    md:h-[130px]
+    lg:h-[160px]
+    bg-center
+    bg-no-repeat
+    bg-contain
+    my-4
+  "
+          style={{
+            backgroundImage: "url('/images/floresColor3.png')",
+          }}
+        />
+
+        <Sobres />
+
+        <FotosGoogle />
       </div>
 
     </Decoracion>

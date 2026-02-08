@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { Play, Pause } from "lucide-react"
+
 
 export default function Portada() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -60,9 +62,12 @@ export default function Portada() {
             onClick={toggleMusic}
             className="inline-flex items-center gap-2 bg-black/60 backdrop-blur px-6 py-3 rounded-full tracking-widest text-sm hover:bg-black/70 transition"
           >
-            <span className="text-base">
-              {playing ? '⏸' : '▶'}
-            </span>
+            {playing ? (
+              <Pause className="w-5 h-5" strokeWidth={1.5} />
+            ) : (
+              <Play className="w-5 h-5" strokeWidth={1.5} />
+            )}
+
             {playing ? 'PAUSAR MÚSICA' : 'REPRODUCIR MÚSICA'}
           </button>
 

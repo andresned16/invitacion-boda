@@ -104,7 +104,11 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
     const mismaZona = userTimezone === timezoneEvento
 
     return (
-        <section className="py-20 px-6">
+        <section className="py-10 px-6">
+            <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
+                Confirma tu asistencia
+            </h2>
+
             <div
                 className="
           relative mx-auto bg-white border border-[#b08b5a]
@@ -125,45 +129,60 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
                 {/* 🟥 LADO IZQUIERDO */}
                 <div
                     className="
-            p-8 text-center bg-[#f99285] text-[#f7f3ee]
-            rounded-t-2xl
-            md:rounded-t-none md:rounded-l-2xl
-          "
+    relative
+    p-8
+    text-center
+    text-[#f7f3ee]
+    rounded-t-2xl
+    md:rounded-t-none md:rounded-l-2xl
+    bg-cover
+    bg-center
+    bg-no-repeat
+  "
+                    style={{
+                        backgroundImage: "url('/images/trazoSalmon.jpg')",
+                    }}
                 >
-                    <p className="text-xs tracking-[0.3em] opacity-90 mb-2 uppercase">
-                        Vuelo de boda
-                    </p>
+                    {/* Overlay sutil para contraste */}
+                    <div className="absolute inset-0 md:rounded-l-2xl rounded-t-2xl md:rounded-t-none pointer-events-none" />
 
-                    <h2 className="text-2xl font-serif mb-4 font-bentinck">
-                        Confirmación
-                    </h2>
-
-                    {fechaLimiteUTC && !confirmacionesCerradas && (
-                        <div className="text-sm space-y-1 opacity-95">
-                            <p className="font-semibold">
-                                {formatDate(fechaLimiteUTC, timezoneEvento)}
-                            </p>
-
-                            {!mismaZona && (
-                                <p className="text-xs opacity-80">
-                                    En tu zona horaria:
-                                    <br />
-                                    {formatDate(fechaLimiteUTC, userTimezone)}
-                                </p>
-                            )}
-                        </div>
-                    )}
-
-                    {confirmacionesCerradas && (
-                        <p className="mt-4 font-semibold text-sm">
-                            ⛔ Confirmación cerrada
+                    {/* Contenido */}
+                    <div className="relative z-10">
+                        <p className="text-xs tracking-[0.3em] opacity-90 mb-2 uppercase">
+                            Vuelo de boda
                         </p>
-                    )}
-                    {/* Imagen maleta y cámara */}
-                    <img
-                        src="/images/maletaycamara.png"
-                        alt="Maleta y cámara"
-                        className="
+
+                        <h2 className="text-2xl font-serif mb-4 font-bentinck">
+                            Confirmación antes del
+                        </h2>
+
+                        {fechaLimiteUTC && !confirmacionesCerradas && (
+                            <div className="text-sm space-y-1 opacity-95 text-[#5c4632]">
+                                <p className="font-semibold">
+                                    {formatDate(fechaLimiteUTC, timezoneEvento)}
+                                </p>
+
+                                {!mismaZona && (
+                                    <p className="text-xs opacity-80">
+                                        En tu zona horaria:
+                                        <br />
+                                        {formatDate(fechaLimiteUTC, userTimezone)}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        {confirmacionesCerradas && (
+                            <p className="mt-4 font-semibold text-sm">
+                                ⛔ Confirmación cerrada
+                            </p>
+                        )}
+
+                        {/* Imagen maleta y cámara */}
+                        <img
+                            src="/images/maletaycamara.png"
+                            alt="Maleta y cámara"
+                            className="
         mt-6
         mx-auto
         w-24
@@ -171,12 +190,11 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
         object-contain
         opacity-90
         pointer-events-none
-    "
-                    />
-
-
-
+      "
+                        />
+                    </div>
                 </div>
+
 
                 {/* 🤍 LADO DERECHO */}
                 <div className="relative p-8 overflow-hidden md:rounded-r-2xl">
