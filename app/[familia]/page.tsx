@@ -181,7 +181,23 @@ export default function InvitacionPage() {
         <div className="fade-right">
           <Countdown fecha="2026-06-28T14:30:00" />
         </div>
-
+        {/* 🌸 Imagen panorámica flores */}
+        <div className="fade-up flex justify-center my-8">
+          <img
+            src="/images/floresPano.png"
+            alt="Decoración"
+            className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+          />
+        </div>
         <section className="py-20 bg-[#f7f3ee] fade-up">
           <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
             Destinos
@@ -213,6 +229,25 @@ export default function InvitacionPage() {
         <div className="fade-left">
           <Vestimenta />
         </div>
+        {/*  Imagen Linea */}
+        <div className="fade-up flex justify-center my-8">
+          <img
+            src="/images/linea.png"
+            alt="Decoración"
+            className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+          />
+        </div>
+
+
 
         <div className="fade-right">
           <Confirmacion familia={familia} />
@@ -221,7 +256,23 @@ export default function InvitacionPage() {
         <div className="fade-up">
           <Itinerario />
         </div>
-
+        {/* 🌸 Imagen panorámica flores */}
+        <div className="fade-up flex justify-center my-8">
+          <img
+            src="/images/floresColor3.png"
+            alt="Decoración"
+            className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+          />
+        </div>
         <div className="fade-left">
           <Sobres />
         </div>
