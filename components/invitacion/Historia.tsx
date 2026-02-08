@@ -16,9 +16,7 @@ export default function Historia() {
       {/* 📖 Libro 3D (solo cliente) */}
       <Book3D />
 
-      <p className="mt-8 text-lg leading-relaxed text-[#3b2f24] font-bentinck">
-        Todo comenzó cuando...
-      </p>
+     
     </section>
   )
 }
