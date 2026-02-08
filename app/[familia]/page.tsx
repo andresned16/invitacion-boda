@@ -19,6 +19,7 @@ import Vestimenta from '@/components/invitacion/Vestimenta'
 import Sobres from '@/components/invitacion/Sobres'
 import FotosGoogle from '@/components/invitacion/FotosGoogle'
 import Galeria from '@/components/invitacion/Galeria'
+import Presentacion from '@/components/invitacion/Presentacion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -171,9 +172,11 @@ export default function InvitacionPage() {
         <Portada />
 
         <div className="fade-up">
-          <Historia familia={familia} />
+          <Presentacion familia={familia} />
         </div>
-
+        <div className="fade-up">
+          <Historia />
+        </div>
         <div className="fade-left">
           <Fecha />
         </div>
