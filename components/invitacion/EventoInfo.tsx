@@ -1,6 +1,6 @@
 // EventoInfo.tsx
 type Evento = {
-    titulo: 'Conferencia Biblica' | 'Recepción'
+    titulo: 'Conferencia Bíblica' | 'Recepción'
     hora: string
     lugar: string
     ubicacionUrl: string
@@ -42,12 +42,12 @@ export default function EventoInfo({ eventos }: Props) {
             >
                 {eventos.map((evento, index) => {
                     const icono =
-                        evento.titulo === 'Conferencia Biblica'
+                        evento.titulo === 'Conferencia Bíblica'
                             ? '/images/discursoLogo.png'
                             : '/images/baileLogo.png'
 
                     const fondoDecorativo =
-                        evento.titulo === 'Conferencia Biblica'
+                        evento.titulo === 'Conferencia Bíblica'
                             ? "url('/images/mapamundi.png')"
                             : "url('/images/playa.png')"
 

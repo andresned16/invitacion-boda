@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Decoracion from '@/components/ui/Decoracion'
 import Pasaporte from '@/components/invitacion/Pasaporte'
@@ -19,6 +20,7 @@ import Sobres from '@/components/invitacion/Sobres'
 import FotosGoogle from '@/components/invitacion/FotosGoogle'
 import Galeria from '@/components/invitacion/Galeria'
 
+gsap.registerPlugin(ScrollTrigger)
 
 export type Familia = {
   id: string
@@ -39,6 +41,7 @@ export default function InvitacionPage() {
   const [pasaporteAbierto, setPasaporteAbierto] = useState(false)
 
   const floresRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchFamilia = async () => {
@@ -55,7 +58,7 @@ export default function InvitacionPage() {
     fetchFamilia()
   }, [familiaSlug])
 
-  // 🌸 Animación flores
+  // 🌸 Animación flores superior
   useEffect(() => {
     if (!floresRef.current) return
 
@@ -82,7 +85,68 @@ export default function InvitacionPage() {
     })
 
     return () => ctx.revert()
-  }, [pasaporteAbierto]) // 👈 CLAVE
+  }, [pasaporteAbierto])
+
+  // ✨ Animaciones elegantes por sección (precisas)
+  // ✨ Animaciones elegantes por sección (responsive inteligente)
+  useEffect(() => {
+    if (!pasaporteAbierto) return
+    if (!containerRef.current) return
+
+    const ctx = gsap.context(() => {
+
+      const isMobile = window.innerWidth < 768
+      const lateralOffset = isMobile ? 0 : 60
+
+      // Fade desde abajo (siempre)
+      gsap.utils.toArray<HTMLElement>('.fade-up').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 40,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        })
+      })
+
+      // Fade izquierda (solo lateral en desktop)
+      gsap.utils.toArray<HTMLElement>('.fade-left').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          x: -lateralOffset,
+          y: isMobile ? 40 : 0,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+          },
+        })
+      })
+
+      // Fade derecha (solo lateral en desktop)
+      gsap.utils.toArray<HTMLElement>('.fade-right').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          x: lateralOffset,
+          y: isMobile ? 40 : 0,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+          },
+        })
+      })
+
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [pasaporteAbierto])
 
 
   if (loading) return <p>Cargando…</p>
@@ -97,70 +161,37 @@ export default function InvitacionPage() {
       {/* 🌸 Flores */}
       <div
         ref={floresRef}
-        className="
-    pointer-events-none
-    absolute
-    top-0
-    lg:-top-4
-    xl:-top-8
-    2xl:-top-12
-    left-0
-    w-full
-
-    h-[140px]
-    md:h-[160px]
-    lg:h-[180px]
-
-    bg-no-repeat
-    bg-bottom
-    bg-cover
-
-    z-20
-  "
-        style={{
-          backgroundImage: "url('/images/flores.png')",
-        }}
+        className="pointer-events-none absolute top-0 left-0 w-full h-[160px] bg-no-repeat bg-bottom bg-cover z-20"
+        style={{ backgroundImage: "url('/images/flores.png')" }}
       />
 
+      <div ref={containerRef}>
 
-      {/* Contenido */}
-      <div>
+        {/* ✅ Portada SIN animación scroll */}
         <Portada />
 
-        <Historia familia={familia} />
+        <div className="fade-up">
+          <Historia familia={familia} />
+        </div>
 
-        <Fecha />
+        <div className="fade-left">
+          <Fecha />
+        </div>
 
+        <div className="fade-right">
+          <Countdown fecha="2026-06-28T14:30:00" />
+        </div>
 
-        <Countdown fecha="2026-06-28T14:30:00" />
-        {/* 🌸 Separador panorámico */}
-        <div
-          className="
-    w-full
-    h-[80px]
-    md:h-[110px]
-    lg:h-[140px]
-    bg-center
-    bg-no-repeat
-    bg-contain
-    my-10
-  "
-          style={{
-            backgroundImage: "url('/images/floresPano.png')",
-          }}
-        />
-
-        <section className="py-20 bg-[#f7f3ee]">
+        <section className="py-20 bg-[#f7f3ee] fade-up">
           <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
             Destinos
           </h2>
 
           <div className="flex justify-center font-bentinck">
-
             <EventoInfo
               eventos={[
                 {
-                  titulo: 'Conferencia Biblica',
+                  titulo: 'Conferencia Bíblica',
                   hora: '2:30 PM',
                   lugar:
                     'Salón del Reino de los Testigos de Jehová, Barrio Profesionales. Cl. 5 Nte. #17-18, Armenia, Quindío',
@@ -177,51 +208,33 @@ export default function InvitacionPage() {
               ]}
             />
           </div>
-
         </section>
-        <Vestimenta />
-        {/* ✨ Línea separadora */}
-        <div className="flex justify-center my-8 md:my-8">
-          <img
-            src="/images/linea.png"
-            alt="Separador"
-            className="
-      w-56
-      md:w-72
-      lg:w-96
-      opacity-90
-    "
-          />
+
+        <div className="fade-left">
+          <Vestimenta />
         </div>
 
+        <div className="fade-right">
+          <Confirmacion familia={familia} />
+        </div>
 
-        <Confirmacion familia={familia} />
+        <div className="fade-up">
+          <Itinerario />
+        </div>
 
-        <Itinerario />
+        <div className="fade-left">
+          <Sobres />
+        </div>
 
-        {/* 🌸 Separador floral */}
-        <div
-          className="
-    w-full
-    h-[100px]
-    md:h-[130px]
-    lg:h-[160px]
-    bg-center
-    bg-no-repeat
-    bg-contain
-    my-4
-  "
-          style={{
-            backgroundImage: "url('/images/floresColor3.png')",
-          }}
-        />
+        <div className="fade-up">
+          <FotosGoogle />
+        </div>
 
-        <Sobres />
+        <div className="fade-up">
+          <Galeria />
+        </div>
 
-        <FotosGoogle />
-        <Galeria />
       </div>
-
     </Decoracion>
   )
 }
