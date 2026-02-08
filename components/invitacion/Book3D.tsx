@@ -15,7 +15,20 @@ import * as THREE from 'three'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 /* =====================================================
-   PAGE (desktop)
+   DATA (UNA SOLA FUENTE DE VERDAD)
+===================================================== */
+
+const pages: [string, string][] = [
+  ['/images/book/page1.jpg', '/images/book/page2.jpg'],
+  ['/images/book/page3.jpg', '/images/book/page4.jpg'],
+  ['/images/book/page5.jpg', '/images/book/page6.jpg'],
+]
+
+const desktopTotal = pages.length
+const mobileTotal = pages.flat().length - 1
+
+/* =====================================================
+   PAGE (DESKTOP)
 ===================================================== */
 
 type PageProps = {
@@ -29,7 +42,6 @@ function Page({ front, back, index, currentPage }: PageProps) {
   const frontRaw = useTexture(front)
   const backRaw = useTexture(back)
 
-  // ✅ Clonamos para poder modificar color sin error
   const frontTex = useMemo(() => {
     const tex = frontRaw.clone()
     tex.colorSpace = THREE.SRGBColorSpace
@@ -50,13 +62,6 @@ function Page({ front, back, index, currentPage }: PageProps) {
   const thickness = 0.015
   const xOffset = -index * thickness
   const zOffset = isFlipped ? index * 0.002 : -index * 0.002
-
-  useLayoutEffect(() => {
-    if (!groupRef.current) return
-    gsap.set(groupRef.current.rotation, {
-      y: isFlipped ? -Math.PI : 0,
-    })
-  }, [])
 
   useLayoutEffect(() => {
     if (!groupRef.current) return
@@ -89,18 +94,12 @@ function Page({ front, back, index, currentPage }: PageProps) {
 function MobilePage({
   textures,
   currentPage,
-  setCurrentPage,
 }: {
   textures: string[]
   currentPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }) {
   const { viewport } = useThree()
   const pivotRef = useRef<THREE.Group>(null)
-
-  const [displayPage, setDisplayPage] = useState(currentPage)
-  const [nextPage, setNextPage] = useState<number | null>(null)
-  const [isAnimating, setIsAnimating] = useState(false)
 
   const rawTextures = useTexture(textures)
 
@@ -113,53 +112,65 @@ function MobilePage({
     })
   }, [rawTextures])
 
-  useEffect(() => {
-    setDisplayPage(currentPage)
-  }, [currentPage])
+  const [displayPage, setDisplayPage] = useState(currentPage)
+  const previousPage = useRef(currentPage)
 
   const pageWidth = 2.5
   const pageHeight = 3.5
   const desiredHeight = viewport.height * 0.85
   const scale = desiredHeight / pageHeight
 
-  const hasNext = displayPage < loadedTextures.length - 1
-
-  const flipForward = () => {
+  useEffect(() => {
     if (!pivotRef.current) return
-    if (isAnimating) return
-    if (!hasNext) return
+    if (currentPage === previousPage.current) return
 
-    setIsAnimating(true)
-    setNextPage(displayPage + 1)
+    const fromPage = previousPage.current
+    const toPage = currentPage
+
+    const goingForward = toPage > fromPage
+    const direction = goingForward ? -1 : 1
 
     gsap.fromTo(
       pivotRef.current.rotation,
       { y: 0 },
       {
-        y: -Math.PI,
-        duration: 0.9,
+        y: direction * Math.PI,
+        duration: 0.8,
         ease: 'power2.inOut',
         onComplete: () => {
-          const newPage = displayPage + 1
-          setDisplayPage(newPage)
-          setCurrentPage(newPage)
-
-          pivotRef.current!.rotation.y = 0
-          setNextPage(null)
-          setIsAnimating(false)
+          if (!pivotRef.current) return
+          pivotRef.current.rotation.y = 0
+          setDisplayPage(toPage)
+          previousPage.current = toPage
         },
       }
     )
-  }
+  }, [currentPage])
+
+  const isAnimating = displayPage !== currentPage
+  const goingForward = currentPage > displayPage
+
+  const pageBelow = isAnimating ? currentPage : displayPage
+
+  const pivotX = goingForward
+    ? -pageWidth / 2
+    : pageWidth / 2
 
   return (
     <group scale={scale}>
-      <group
-        ref={pivotRef}
-        onClick={flipForward}
-        position={[-pageWidth / 2, 0, 0]}
-      >
-        <group position={[pageWidth / 2, 0, 0]}>
+      {/* Página inferior */}
+      <mesh>
+        <planeGeometry args={[pageWidth, pageHeight]} />
+        <meshBasicMaterial
+          map={loadedTextures[pageBelow]}
+          toneMapped={false}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* Página que rota */}
+      <group ref={pivotRef} position={[pivotX, 0, 0]}>
+        <group position={[-pivotX, 0, 0]}>
           <mesh>
             <planeGeometry args={[pageWidth, pageHeight]} />
             <meshBasicMaterial
@@ -168,17 +179,6 @@ function MobilePage({
               side={THREE.DoubleSide}
             />
           </mesh>
-
-          {nextPage !== null && (
-            <mesh rotation={[0, Math.PI, 0]}>
-              <planeGeometry args={[pageWidth, pageHeight]} />
-              <meshBasicMaterial
-                map={loadedTextures[nextPage]}
-                toneMapped={false}
-                side={THREE.DoubleSide}
-              />
-            </mesh>
-          )}
         </group>
       </group>
     </group>
@@ -189,28 +189,15 @@ function MobilePage({
    BOOK
 ===================================================== */
 
-function Book({
-  currentPage,
-  setCurrentPage,
-}: {
-  currentPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-}) {
+function Book({ currentPage }: { currentPage: number }) {
   const { size } = useThree()
   const isMobile = size.width < 640
-
-  const pages: [string, string][] = [
-    ['/images/book/page1.jpg', '/images/book/page2.jpg'],
-    ['/images/book/page3.jpg', '/images/book/page4.jpg'],
-    ['/images/book/page5.jpg', '/images/book/page6.jpg'],
-  ]
 
   if (isMobile) {
     return (
       <MobilePage
         textures={pages.flat()}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
       />
     )
   }
@@ -245,7 +232,7 @@ export default function Book3D() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  const totalPages = isMobile ? 5 : 2
+  const totalPages = isMobile ? mobileTotal : desktopTotal
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
@@ -262,10 +249,7 @@ export default function Book3D() {
           }}
         >
           <Suspense fallback={null}>
-            <Book
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
+            <Book currentPage={currentPage} />
           </Suspense>
         </Canvas>
       </div>
@@ -274,7 +258,7 @@ export default function Book3D() {
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
           disabled={currentPage === 0}
-          className="inline-flex items-center gap-2 bg-[#5C4632] text-white text-sm px-8 py-3 tracking-wider hover:opacity-90 transition font-bentinck disabled:opacity-40 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 bg-[#5C4632] text-white text-sm px-8 py-3 tracking-wider hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <ChevronLeft size={18} />
           Anterior
@@ -285,7 +269,7 @@ export default function Book3D() {
             setCurrentPage((p) => Math.min(p + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="inline-flex items-center gap-2 bg-[#5C4632] text-white text-sm px-8 py-3 tracking-wider hover:opacity-90 transition font-bentinck disabled:opacity-40 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 bg-[#5C4632] text-white text-sm px-8 py-3 tracking-wider hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Siguiente
           <ChevronRight size={18} />
