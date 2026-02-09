@@ -22,6 +22,10 @@ const pages: [string, string][] = [
   ['/images/book/page1.jpg', '/images/book/page2.jpg'],
   ['/images/book/page3.jpg', '/images/book/page4.jpg'],
   ['/images/book/page5.jpg', '/images/book/page6.jpg'],
+  ['/images/book/page7.jpg', '/images/book/page8.jpg'],
+  ['/images/book/page9.jpg', '/images/book/page10.jpg'],
+
+
 ]
 
 const desktopTotal = pages.length
