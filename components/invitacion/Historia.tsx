@@ -3,20 +3,21 @@
 import dynamic from 'next/dynamic'
 
 const Book3D = dynamic(() => import('./Book3D'), {
-  ssr: false,
+    ssr: false,
 })
 
 export default function Historia() {
-  return (
-    <section className="py-16 px-2 max-w-5xl mx-auto text-center">
-      <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
-        Nuestra historia
-      </h2>
+    return (
+        <section className="py-16 px-2 max-w-5xl mx-auto text-center">
+            <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
+                Nuestra historia
+            </h2>
 
-      {/* Contenedor con sombra paralela (drop-shadow) */}
-      <div className="drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
-        <Book3D />
-      </div>
-    </section>
-  )
+            {/* Contenedor con sombra paralela (drop-shadow) */}
+            <div className="drop-shadow-[0_10px_10px_rgba(0,0,0,0.18)]">
+                <Book3D />
+            </div>
+
+        </section>
+    )
 }
