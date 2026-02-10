@@ -174,6 +174,23 @@ export default function InvitacionPage() {
         <div className="fade-up">
           <Presentacion familia={familia} />
         </div>
+        {/*  Imagen Linea */}
+        <div className="fade-left flex justify-center">
+          <img
+            src="/images/linea2.png"
+            alt="Decoración"
+            className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+          />
+        </div>
         <div className="fade-up">
           <Historia />
         </div>
