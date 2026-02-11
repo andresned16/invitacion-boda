@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 import Modal from '@/components/ui/Modal'
 import Decoracion from '@/components/ui/Decoracion';
 import FechaLimiteConfirmacion from '@/components/admin/FechaLimiteConfirmacion'
-import { Copy, Check, RefreshCcw, Plus, LogOut, Menu, CheckCircle, Clock, Lock, Share2, XCircle } from "lucide-react";
+import { Copy, Check, RefreshCcw, Plus, LogOut, Menu, CheckCircle, Clock, Lock, Share2, XCircle, Heart } from "lucide-react";
 
 
 
@@ -50,6 +50,12 @@ export default function AdminPage() {
             setShowHint(false) // 👈 apenas se mueve, desaparece
         }
     }
+    const SLUGS_RESERVADOS = [
+        'admin',
+        'api',
+        'login',
+        'dashboard',
+    ]
 
     const [fadeOpacity, setFadeOpacity] = useState(1)
 
@@ -217,26 +223,34 @@ ${link}`;
     if (!autorizado) {
         return (
             <Decoracion>
-                <main className="min-h-screen flex items-center justify-center p-6">
+                <main className="min-h-screen flex items-center justify-center p-6 bg-[#f7f3ee]">
 
                     <form
-                        className="w-full max-w-sm bg-white p-6 rounded-xl shadow-sm border"
+                        className="
+            w-full 
+            max-w-sm 
+            bg-[#fffaf6] 
+            p-8 
+            rounded-2xl 
+            shadow-lg 
+            border border-[#e8dfd6]
+          "
                         onSubmit={(e) => {
                             e.preventDefault();
                             login();
                         }}
                     >
                         {/* Título */}
-                        <div className="flex flex-col items-center mb-6 gap-2">
-                            <div className="p-3 bg-gray-100 rounded-full">
-                                <Lock className="text-gray-700" size={24} />
+                        <div className="flex flex-col items-center mb-6 gap-3">
+                            <div className="p-4 bg-[#5C4632] rounded-full shadow-md">
+                                <Lock className="text-white" size={22} />
                             </div>
 
-                            <h1 className="text-2xl font-bold text-center">
+                            <h1 className="text-2xl font-bold text-center text-[#5C4632] font-bentinck tracking-wide">
                                 Acceso administrador
                             </h1>
 
-                            <p className="text-sm text-gray-500 text-center">
+                            <p className="text-sm text-[#b89b7a] text-center font-bentinck">
                                 Introduce la contraseña para continuar
                             </p>
                         </div>
@@ -246,8 +260,18 @@ ${link}`;
                             <input
                                 type="password"
                                 placeholder="Contraseña"
-                                className="w-full border rounded-lg px-3 py-2 
-                           focus:outline-none focus:ring-2 focus:ring-black"
+                                className="
+                w-full 
+                border border-[#d8cfc6] 
+                bg-white
+                rounded-lg 
+                px-3 py-2 
+                focus:outline-none 
+                focus:ring-2 
+                focus:ring-[#5C4632]
+                focus:border-[#5C4632]
+                transition
+              "
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 autoFocus
@@ -256,7 +280,7 @@ ${link}`;
 
                         {/* Error */}
                         {error && (
-                            <p className="text-red-600 text-sm mb-3 text-center">
+                            <p className="text-red-500 text-sm mb-3 text-center">
                                 {error}
                             </p>
                         )}
@@ -264,20 +288,57 @@ ${link}`;
                         {/* Botón */}
                         <button
                             type="submit"
-                            className="w-full bg-black text-white py-2.5 rounded-lg 
-                       hover:bg-gray-900 transition font-medium"
+                            className="
+              w-full 
+              bg-[#5C4632] 
+              text-white 
+              py-2.5 
+              rounded-lg 
+              hover:opacity-90 
+              transition-opacity 
+              duration-200
+              font-medium
+              tracking-wide
+              shadow-md
+            "
                         >
                             Entrar
                         </button>
                     </form>
                 </main>
-
             </Decoracion>
         )
     }
 
 
-    if (loading) return <p className="p-6">Cargando confirmaciones…</p>
+
+    if (loading) {
+        return (
+            <Decoracion>
+                <div className="min-h-screen flex items-center justify-center px-6 bg-[#fdfaf6]">
+                    <div className="text-center">
+
+                        {/* Spinner romántico */}
+                        <div className="relative flex items-center justify-center mb-6">
+
+                            {/* Anillo girando */}
+                            <div className="w-16 h-16 border-4 border-[#d6c3b3] border-t-[#5C4632] rounded-full animate-spin" />
+
+                            {/* Corazón centrado */}
+                            <Heart className="absolute w-6 h-6 text-[#b89b7a]" />
+                        </div>
+
+                        <p className="text-[#7a5c3e] text-sm tracking-wide font-bentinck">
+                            Cargando confirmaciones...
+                        </p>
+
+                    </div>
+                </div>
+            </Decoracion>
+        )
+    }
+
+
 
     // 📊 MÉTRICAS
 
@@ -357,6 +418,19 @@ ${link}`;
     const generarSlugUnico = async (nombre: string) => {
         const baseSlug = generarSlug(nombre)
 
+        // 🚫 Bloquear slugs reservados
+        if (SLUGS_RESERVADOS.includes(baseSlug)) {
+            let contador = 2
+            let nuevoSlug = `${baseSlug}-${contador}`
+
+            while (SLUGS_RESERVADOS.includes(nuevoSlug)) {
+                contador++
+                nuevoSlug = `${baseSlug}-${contador}`
+            }
+
+            return nuevoSlug
+        }
+
         const { data } = await supabase
             .from('familias')
             .select('slug_familia')
@@ -371,13 +445,17 @@ ${link}`;
         let contador = 2
         let nuevoSlug = `${baseSlug}-${contador}`
 
-        while (slugsExistentes.includes(nuevoSlug)) {
+        while (
+            slugsExistentes.includes(nuevoSlug) ||
+            SLUGS_RESERVADOS.includes(nuevoSlug)
+        ) {
             contador++
             nuevoSlug = `${baseSlug}-${contador}`
         }
 
         return nuevoSlug
     }
+
 
 
 
@@ -499,9 +577,10 @@ ${link}`;
             <main className="min-h-screen p-6 max-w-5xl mx-auto">
                 <div className="flex justify-between items-center mb-6 gap-4 relative">
 
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-3xl font-bold text-[#5C4632] font-bentinck">
                         Confirmaciones de la boda
                     </h1>
+
 
                     {/* 🖥️ BOTONES DESKTOP */}
                     <div className="hidden md:flex items-center gap-3">
@@ -509,8 +588,15 @@ ${link}`;
                         {/* Refrescar */}
                         <button
                             onClick={refresh}
-                            className="flex items-center gap-2 text-sm px-3 py-1.5 border rounded-lg 
-                   hover:bg-gray-50 transition"
+                            className="
+flex items-center gap-2 text-sm px-3 py-1.5 
+border border-[#d8cfc6] 
+text-[#5C4632]
+rounded-lg 
+hover:bg-[#f3eae2] 
+transition
+"
+
                         >
                             <RefreshCcw size={16} />
                             <span>Refrescar</span>
@@ -522,9 +608,15 @@ ${link}`;
                                 setShowAddModal(true);
                                 setNewUrl(null);
                             }}
-                            className="flex items-center gap-2 text-sm px-3 py-1.5 
-                   bg-green-600 text-white rounded-lg 
-                   hover:bg-green-700 transition"
+                            className="
+flex items-center gap-2 text-sm px-3 py-1.5 
+bg-[#5C4632] 
+text-white 
+rounded-lg 
+hover:opacity-90 
+transition
+"
+
                         >
                             <Plus size={16} />
                             <span>Agregar familia</span>
@@ -533,8 +625,13 @@ ${link}`;
                         {/* Cerrar sesión */}
                         <button
                             onClick={logout}
-                            className="flex items-center gap-1 text-sm text-gray-500 
-                   hover:text-red-600 transition"
+                            className="
+flex items-center gap-1 text-sm 
+text-[#7a5c3e] 
+hover:text-red-600 
+transition
+"
+
                         >
                             <LogOut size={16} />
                             <span>Cerrar sesión</span>
@@ -591,7 +688,8 @@ ${link}`;
                 </div>
 
 
-                <div className="mb-10 bg-white border rounded p-6">
+                <div className="mb-10 bg-[#fffaf6] border border-[#e8dfd6] rounded-2xl p-6 shadow-sm">
+
                     <div className="flex flex-col md:flex-row gap-6 items-center">
 
                         {/* 📊 MÉTRICAS */}
@@ -682,7 +780,7 @@ ${link}`;
 
 
                 {/* PANEL DE FILTROS */}
-                <div className="bg-white border rounded-lg p-4 mb-6 shadow-sm">
+                <div className="bg-[#fffaf6] border border-[#e8dfd6] rounded-2xl p-4 mb-6 shadow-sm">
                     <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
 
                         {/* Buscador */}
@@ -817,8 +915,10 @@ ${link}`;
 
 
 
-                    <table className="min-w-[900px] bg-stone-50 border-collapse">
-                        <thead className="bg-gray-100 text-sm">
+                    <table className="min-w-[900px] bg-[#fffaf6] border-collapse">
+
+                        <thead className="bg-[#f3eae2] text-sm text-[#5C4632]">
+
                             <tr>
                                 <th className="p-3 text-center">Familia</th>
                                 <th className="p-3 text-center">Estado</th>
@@ -833,7 +933,8 @@ ${link}`;
                             {familiasPaginadas.map((f) => (
                                 <tr
                                     key={f.id}
-                                    className="border-t hover:bg-gray-50 transition"
+                                    className="border-t hover:bg-[#f7f3ee] transition"
+
                                 >
                                     <td className="p-3 font-medium">
                                         {f.nombre_familia}
@@ -1015,7 +1116,14 @@ ${link}`;
                             <div className="flex justify-between gap-3">
                                 <button
                                     onClick={closeModal}
-                                    className="px-4 py-2 border rounded"
+                                    className="
+px-4 py-2 
+border border-[#d8cfc6] 
+rounded-lg 
+hover:bg-[#f3eae2] 
+transition
+"
+
                                     disabled={saving}
                                 >
                                     Cancelar
@@ -1023,7 +1131,15 @@ ${link}`;
 
                                 <button
                                     onClick={guardarCambiosAdmin}
-                                    className="px-4 py-2 bg-black text-white rounded"
+                                    className="
+px-4 py-2 
+bg-[#5C4632] 
+text-white 
+rounded-lg 
+hover:opacity-90 
+transition
+"
+
                                     disabled={saving}
                                 >
                                     {saving ? 'Guardando…' : 'Guardar cambios'}
