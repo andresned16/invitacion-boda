@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { AlertCircle, Heart } from "lucide-react"
 
 import Decoracion from '@/components/ui/Decoracion'
 import Pasaporte from '@/components/invitacion/Pasaporte'
@@ -150,8 +151,55 @@ export default function InvitacionPage() {
   }, [pasaporteAbierto])
 
 
-  if (loading) return <p>Cargando…</p>
-  if (!familia) return <p>Invitación no encontrada</p>
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6 bg-[#fdfaf6]">
+        <div className="text-center">
+
+          {/* Spinner romántico */}
+          <div className="relative flex items-center justify-center mb-6">
+
+            {/* Anillo girando */}
+            <div className="w-16 h-16 border-4 border-[#d6c3b3] border-t-[#b89b7a] rounded-full animate-spin" />
+
+            {/* Corazón centrado */}
+            <Heart className="absolute w-6 h-6 text-[#b89b7a]" />
+          </div>
+
+          <h2 className="text-2xl font-semibold text-[#7a5c3e] mb-2 font-bentinck">
+            Estamos preparando su invitación…
+          </h2>
+
+          <p className="text-[#a38b75] text-sm tracking-wide font-bentinck">
+            Un momento por favor ✨
+          </p>
+
+        </div>
+      </div>
+    )
+  }
+  if (!familia) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+
+          <div className="flex justify-center mb-4">
+            <AlertCircle className="w-14 h-14 text-red-400" />
+          </div>
+
+          <h2 className="text-2xl font-semibold text-[#7a5c3e] mb-2 font-bentinck">
+            Invitación no encontrada
+          </h2>
+
+          <p className="text-[#a38b75] font-bentinck">
+            No pudimos encontrar la invitación que estás buscando.
+            Verifica el enlace o comunícate con los anfitriones.
+          </p>
+
+        </div>
+      </div>
+    )
+  }
 
   if (!pasaporteAbierto) {
     return <Pasaporte onAbrir={() => setPasaporteAbierto(true)} />
