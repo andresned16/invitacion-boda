@@ -124,13 +124,15 @@ export default function AdminPage() {
 
     const esIndividual = cantidadInvitados === 1;
 
-    const mensajeCompartir = `${nombreFamilia},
+    const mensajeCompartir = `${link}
 
-${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a nuestra boda 💍✨
+💍✨ ${nombreFamilia},
 
-Aquí ${esIndividual ? 'puedes' : 'pueden'} confirmar ${esIndividual ? 'tu' : 'su'
-        } asistencia:
-${link}`;
+${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a celebrar nuestro gran día.
+
+Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇`;
+
+
 
 
 
