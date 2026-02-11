@@ -25,7 +25,7 @@ export default function Portada() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-black">
+    <section className="relative min-h-screen overflow-hidden bg-[#f7f3ee]">
       {/* Fondo */}
       <div
         className="

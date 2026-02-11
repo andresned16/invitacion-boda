@@ -48,7 +48,7 @@ export default function Countdown({ fecha }: { fecha: string }) {
     }
 
     return (
-        <section className="relative py-20 max-[440px]:py-14 text-center bg-[#f7f3ee] overflow-hidden">
+        <section className="relative py-20 max-[440px]:py-14 text-center overflow-hidden">
 
             {/* Fondo polvo responsive */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

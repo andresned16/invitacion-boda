@@ -44,6 +44,8 @@ export default function InvitacionPage() {
 
   const floresRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const globoRef = useRef<HTMLImageElement>(null)
+
 
   useEffect(() => {
     const fetchFamilia = async () => {
@@ -88,6 +90,53 @@ export default function InvitacionPage() {
 
     return () => ctx.revert()
   }, [pasaporteAbierto])
+
+
+  //Movimiento del Globo
+
+  useEffect(() => {
+    if (!globoRef.current) return
+    if (!containerRef.current) return
+
+    const ctx = gsap.context(() => {
+
+      // 🎈 Movimiento vertical ligado al scroll
+      gsap.to(globoRef.current, {
+        y: 600,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        }
+      })
+
+      // 🌬 Movimiento lateral elegante (cruce completo lento)
+      gsap.to(globoRef.current, {
+        x: -window.innerWidth + 150, // cruza casi toda la pantalla
+        duration: 25,               // MUY lento
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      })
+
+
+      // 💫 Rotación suave tipo viento
+      gsap.to(globoRef.current, {
+        rotation: 2,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      })
+
+    })
+
+    return () => ctx.revert()
+  }, [pasaporteAbierto])
+
+
 
   // ✨ Animaciones elegantes por sección (precisas)
   // ✨ Animaciones elegantes por sección (responsive inteligente)
@@ -166,7 +215,7 @@ export default function InvitacionPage() {
             <Heart className="absolute w-6 h-6 text-[#b89b7a]" />
           </div>
 
-         
+
           <p className="text-[#a38b75] text-sm tracking-wide font-bentinck">
             Cargando invitación...
           </p>
@@ -210,6 +259,25 @@ export default function InvitacionPage() {
         className="pointer-events-none absolute top-0 left-0 w-full h-[160px] bg-no-repeat bg-bottom bg-cover z-20"
         style={{ backgroundImage: "url('/images/flores.png')" }}
       />
+      {/* 🎈 Globo flotando detrás */}
+      <img
+        ref={globoRef}
+        src="/images/globo.png"
+        alt="Globo decorativo"
+        className="
+    pointer-events-none
+    fixed
+    top-14
+    right-6
+    sm:right-10
+    md:right-16
+    w-10 sm:w-12 md:w-16
+    opacity-70
+    z-0
+  "
+      />
+
+
 
       <div ref={containerRef}>
 
@@ -263,7 +331,7 @@ export default function InvitacionPage() {
     "
           />
         </div>
-        <section className="py-20 bg-[#f7f3ee] fade-up">
+        <section className="py-20 fade-up">
           <h2 className="text-5xl font-kingsguard mb-10 text-[#7a5c3e]">
             Destinos
           </h2>
