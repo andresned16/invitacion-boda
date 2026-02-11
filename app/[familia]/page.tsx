@@ -166,12 +166,9 @@ export default function InvitacionPage() {
             <Heart className="absolute w-6 h-6 text-[#b89b7a]" />
           </div>
 
-          <h2 className="text-2xl font-semibold text-[#7a5c3e] mb-2 font-bentinck">
-            Estamos preparando su invitación…
-          </h2>
-
+         
           <p className="text-[#a38b75] text-sm tracking-wide font-bentinck">
-            Un momento por favor ✨
+            Cargando invitación...
           </p>
 
         </div>

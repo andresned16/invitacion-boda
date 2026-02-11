@@ -24,24 +24,14 @@ export default function Sobres() {
                 }
             )
 
-            // 🌬 Flotación continua elegante
+            // 💌 Wiggle continuo elegante
             gsap.to(sobresRef.current, {
-                y: 8,
-                duration: 3,
-                ease: 'sine.inOut',
-                repeat: -1,
+                rotation: 3,
+                duration: 0.25,
+                ease: "sine.inOut",
                 yoyo: true,
+                repeat: -1,
                 delay: 1.2
-            })
-
-            // 💌 Micro inclinación ocasional
-            gsap.to(sobresRef.current, {
-                rotate: 2,
-                duration: 2,
-                ease: 'sine.inOut',
-                repeat: -1,
-                yoyo: true,
-                delay: 2
             })
 
         })
@@ -65,9 +55,9 @@ export default function Sobres() {
                 "
             />
 
-            <p className="font-kingsguard text-4xl text-[#7a5c3e]">
+            <h2 className="font-kingsguard text-4xl text-[#7a5c3e]">
                 Lluvia de Sobres
-            </p>
+            </h2>
         </section>
     )
 }

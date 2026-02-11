@@ -16,6 +16,12 @@ export default function Galeria() {
     "/images/gallery/foto1.jpeg",
     "/images/gallery/foto2.jpeg",
     "/images/gallery/foto3.jpeg",
+    "/images/gallery/foto4.jpeg",
+    "/images/gallery/foto5.jpeg",
+    "/images/gallery/foto6.jpeg",
+    "/images/gallery/foto7.jpeg",
+    "/images/gallery/foto8.jpeg",
+
   ]
 
   const [index, setIndex] = useState(0)
