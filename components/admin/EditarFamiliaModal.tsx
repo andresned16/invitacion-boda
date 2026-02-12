@@ -37,11 +37,6 @@ export default function EditarFamiliaModal({
     const [copiado, setCopiado] = useState(false)
     const [compartido, setCompartido] = useState(false)
 
-    useEffect(() => {
-        if (familia) {
-            setSeleccionados(familia.invitados_confirmados ?? [])
-        }
-    }, [familia])
 
     if (!familia) return null
 

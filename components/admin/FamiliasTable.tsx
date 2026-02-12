@@ -73,7 +73,7 @@ export default function FamiliasTable({
           />
         )}
 
-        <table className="min-w-[900px] bg-[#fffaf6] border-collapse">
+        <table className="w-full min-w-[900px] bg-[#fffaf6] border-collapse">
 
           <thead className="bg-[#f3eae2] text-sm text-[#5C4632]">
             <tr>

@@ -335,15 +335,14 @@ export default function AdminPage() {
 
     return (
         <Decoracion>
+
+            <AdminHeader
+                onRefresh={refresh}
+                onAdd={() => setShowAddModal(true)}
+
+                onLogout={logout}
+            />
             <main className="min-h-screen p-6 max-w-5xl mx-auto">
-                <AdminHeader
-                    onRefresh={refresh}
-                    onAdd={() => setShowAddModal(true)}
-
-                    onLogout={logout}
-                />
-
-
                 <DashboardMetricas
                     totalInvitados={totalInvitados}
                     totalConfirmados={totalConfirmados}
