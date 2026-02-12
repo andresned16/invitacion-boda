@@ -108,18 +108,24 @@ export default function FechaLimiteConfirmacion() {
   const guardar = async () => {
     setGuardando(true)
 
-    const { error } = await supabase
-      .from('configuracion')
-      .update({
+    const res = await fetch('/api/admin/configuracion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         fecha_limite_confirmacion: new Date(fecha).toISOString(),
         timezone_evento: timezone,
-      })
-      .eq('id', CONFIG_ID)
+      }),
+    })
+
+    const result = await res.json()
+
 
     setGuardando(false)
 
-    if (error) {
-      console.error(error)
+    if (!res.ok) {
+      console.error(result)
       setPopup({
         type: 'error',
         message: 'Hubo un error al guardar la configuración',
@@ -130,6 +136,7 @@ export default function FechaLimiteConfirmacion() {
         message: 'Configuración actualizada correctamente 💍',
       })
     }
+
   }
 
   if (loading) {
@@ -157,10 +164,9 @@ export default function FechaLimiteConfirmacion() {
               backdrop-blur-sm
               font-bentinck
               transition-all duration-300
-              ${
-                popup.type === 'success'
-                  ? 'bg-[#fdfaf6] border-[#b89b7a] text-[#5C4632]'
-                  : 'bg-[#fff5f5] border-red-300 text-red-700'
+              ${popup.type === 'success'
+                ? 'bg-[#fdfaf6] border-[#b89b7a] text-[#5C4632]'
+                : 'bg-[#fff5f5] border-red-300 text-red-700'
               }
             `}
           >
