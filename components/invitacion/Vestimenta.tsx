@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useEffect, useRef } from "react"
@@ -9,36 +10,38 @@ export default function Vestimenta() {
   const trajeRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
+  if (!vestidoRef.current || !trajeRef.current) return
 
-    if (!vestidoRef.current || !trajeRef.current) return
+  const tl = gsap.timeline()
 
-    const tl = gsap.timeline()
+  tl.fromTo(
+    vestidoRef.current,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+  )
 
-    // Animación de entrada vestido
-    tl.fromTo(
-      vestidoRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-    )
+  tl.fromTo(
+    trajeRef.current,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+    "-=0.5"
+  )
 
-    // Animación de entrada traje
-    tl.fromTo(
-      trajeRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
-      "-=0.5"
-    )
+  const float = gsap.to([vestidoRef.current, trajeRef.current], {
+    y: 6,
+    duration: 3,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  })
 
-    // Efecto flotante sutil estilo "brisa"
-    gsap.to([vestidoRef.current, trajeRef.current], {
-      y: 6,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    })
+  return () => {
+    tl.kill()
+    float.kill()
+  }
 
-  }, [])
+}, [])
+
 
   return (
     <section className="py-16 px-6 max-w-3xl mx-auto text-center">

@@ -73,15 +73,15 @@ export default function CrearFamiliaModal({
     setCreating(false)
   }
 
-  const mensajeCompartir = newUrl
-    ? `${newUrl}
-
-💍✨ ${nombre},
+const mensajeCompartir = newUrl
+  ? `💍✨ ${nombre},
 
 Queremos invitarte a celebrar nuestro gran día.
 
-Confirma tu asistencia aquí 👇`
-    : ''
+Confirma tu asistencia aquí 👇
+${newUrl}`
+  : ''
+
 
   return (
     <Modal open={open} onClose={handleClose}>
