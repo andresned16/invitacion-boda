@@ -17,30 +17,24 @@ export default function Presentacion({ familia }: { familia: Familia }) {
             <p className="text-base md:text-lg mb-10 text-[#3b2f24] leading-relaxed font-bentinck">
                 {esFamilia ? (
                     <>
-                        Con inmensa alegría en nuestros corazones, queremos extenderles una
-                        cariñosa invitación a celebrar uno de los días más especial de nuestras vidas.
-                        Nuestra boda no estaría completa sin la presencia de quienes han sido
-                        parte importante de nuestro camino, y ustedes ocupan un lugar muy
-                        especial para nosotros.
+                        Con inmensa alegría en nuestros corazones, queremos extenderles una cariñosa invitación a celebrar uno de los días más especiales de nuestras vidas.
                         <br /><br />
-                        Será un honor compartir junto a ustedes este momento lleno de amor,
-                        unión y gratitud.
+                        Nuestra boda no estaría completa sin ustedes, quienes han sido parte fundamental de nuestro camino y ocupan un lugar muy especial en nuestros corazones.
+                        <br /><br />
+                        Será un honor compartir con ustedes este momento lleno de amor, unión y gratitud.
                     </>
                 ) : (
                     <>
-                        Con inmensa alegría en nuestros corazones, queremos extenderte una
-                        cariñosa invitación a celebrar uno de los días más especial de nuestras vidas.
-                        Nuestra boda no estaría completa sin la presencia de quien ha sido
-                        parte importante de nuestro camino, y tú ocupas un lugar muy especial
-                        para nosotros.
+                        Con inmensa alegría en nuestros corazones, queremos extenderte una cariñosa invitación a celebrar uno de los días más especiales de nuestras vidas.
                         <br /><br />
-                        Será un honor compartir contigo este momento lleno de amor,
-                        unión y gratitud.
+                        Nuestra boda no estaría completa sin ti, quien has sido parte fundamental de nuestro camino y ocupas un lugar muy especial en nuestros corazones.
+                        <br /><br />
+                        Será un honor compartir contigo este momento lleno de amor, unión y gratitud.
                     </>
                 )}
             </p>
 
-          
+
         </section>
     )
 }

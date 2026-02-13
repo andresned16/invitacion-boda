@@ -10,37 +10,37 @@ export default function Vestimenta() {
   const trajeRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
-  if (!vestidoRef.current || !trajeRef.current) return
+    if (!vestidoRef.current || !trajeRef.current) return
 
-  const tl = gsap.timeline()
+    const tl = gsap.timeline()
 
-  tl.fromTo(
-    vestidoRef.current,
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-  )
+    tl.fromTo(
+      vestidoRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    )
 
-  tl.fromTo(
-    trajeRef.current,
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
-    "-=0.5"
-  )
+    tl.fromTo(
+      trajeRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+      "-=0.5"
+    )
 
-  const float = gsap.to([vestidoRef.current, trajeRef.current], {
-    y: 6,
-    duration: 3,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut"
-  })
+    const float = gsap.to([vestidoRef.current, trajeRef.current], {
+      y: 6,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    })
 
-  return () => {
-    tl.kill()
-    float.kill()
-  }
+    return () => {
+      tl.kill()
+      float.kill()
+    }
 
-}, [])
+  }, [])
 
 
   return (
@@ -50,8 +50,12 @@ export default function Vestimenta() {
         Código de Vestimenta
       </h2>
 
+      <p className="text-lg text-[#5c4632] font-bentinck mt-2">
+        Queremos que este día sea tan especial para ti como lo será para nosotros.
+        Te invitamos a elegir un atuendo acorde a la ocasión.
+      </p>
       {/* ================= MUJERES ================= */}
-      <p className="text-xl text-[#5c4632] font-bentinck">
+      <p className="text-xl text-[#5c4632] font-bentinck mt-10">
         MUJERES
       </p>
 
@@ -70,7 +74,7 @@ export default function Vestimenta() {
 
       <div className="mt-6 flex justify-center">
         <a
-          href="https://www.google.com/search?q=vestido+largo+elegante+para+boda+en+la+playa+referencias"
+          href="https://mx.pinterest.com/search/pins/?q=tropical%20formal%20mujeres&rs=typed"
           target="_blank"
           rel="noopener noreferrer"
           className="
@@ -110,7 +114,7 @@ export default function Vestimenta() {
 
       <div className="mt-6 flex justify-center">
         <a
-          href="https://www.google.com/search?q=camisa+manga+larga+y+pantalon+caqui+para+boda+en+la+playa+referencias"
+          href="https://mx.pinterest.com/search/pins/?q=outfits%20hombres%20boda%20casual&rs=ac&len=22&source_id=ac_QWaxdNYw&eq=casual%20hombres%20outfits&etslf=4168"
           target="_blank"
           rel="noopener noreferrer"
           className="
