@@ -4,7 +4,7 @@ import { Music } from "lucide-react"
 
 export default function PlaylistBoda() {
     const playlistUrl = "https://open.spotify.com/playlist/0pTrCIjfhGhlzNI0S2t16d"
-    const embedUrl = "https://open.spotify.com/embed/playlist/0pTrCIjfhGhlzNI0S2t16d"
+    const embedUrl = "https://open.spotify.com/playlist/0pTrCIjfhGhlzNI0S2t16d?si=0rbWehdXTdqlB42et5e0Xg&pt=2140ff2fb2af28956b2947d8b14beca0"
 
     return (
         <section className="py-24 text-center fade-up">
