@@ -73,14 +73,22 @@ export default function CrearFamiliaModal({
     setCreating(false)
   }
 
-const mensajeCompartir = newUrl
-  ? `💍✨ ${nombre},
+  const invitadosLimpios = invitados
+    .map(i => i.trim())
+    .filter(Boolean)
 
-Queremos invitarte a celebrar nuestro gran día.
+  const cantidadInvitados = invitadosLimpios.length
+  const esIndividual = cantidadInvitados === 1
 
-Confirma tu asistencia aquí 👇
+
+  const mensajeCompartir = newUrl
+    ? `💍✨ ${nombre},
+
+${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a celebrar nuestro gran día.
+
+Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇
 ${newUrl}`
-  : ''
+    : ''
 
 
   return (
@@ -171,7 +179,7 @@ ${newUrl}`
                         setCopiado(true)
                         setTimeout(() => setCopiado(false), 2000)
                       }
-                    } catch {}
+                    } catch { }
                   }}
                   className="text-gray-500 hover:text-green-600"
                 >

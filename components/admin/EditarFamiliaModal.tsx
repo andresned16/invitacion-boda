@@ -48,13 +48,13 @@ export default function EditarFamiliaModal({
     const cantidadInvitados = familia.invitados_posibles.length
     const esIndividual = cantidadInvitados === 1
 
-    const mensajeCompartir = `${link}
-
-💍✨ ${familia.nombre_familia},
+    const mensajeCompartir = `💍✨ ${familia.nombre_familia},
 
 ${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a celebrar nuestro gran día.
 
-Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇`
+Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇
+${link}`
+
 
     const toggleInvitado = (nombre: string) => {
         setSeleccionados((prev) =>

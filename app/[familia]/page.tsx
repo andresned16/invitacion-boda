@@ -21,6 +21,8 @@ import Sobres from '@/components/invitacion/Sobres'
 import FotosGoogle from '@/components/invitacion/FotosGoogle'
 import Galeria from '@/components/invitacion/Galeria'
 import Presentacion from '@/components/invitacion/Presentacion'
+import PlaylistBoda from '@/components/invitacion/PlaylistBoda'
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -417,6 +419,10 @@ export default function InvitacionPage() {
         <div className="fade-up">
           <Galeria />
         </div>
+        <div className="fade-left">
+          <PlaylistBoda />
+        </div>
+
 
       </div>
     </Decoracion>
