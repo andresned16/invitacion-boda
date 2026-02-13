@@ -13,7 +13,7 @@ export default function PlaylistBoda() {
                 Nuestra Playlist
             </h2>
 
-            <p className="font-bentinck text-[#3b2f24] mb-10 max-w-xl mx-auto">
+            <p className="font-bentinck text-lg text-[#5c4632] mb-10 max-w-xl mx-auto">
                 Queremos que nuestra boda tenga la música que tú también amas.
                 Agrega esa canción que no puede faltar en la pista de baile 🎶
             </p>
