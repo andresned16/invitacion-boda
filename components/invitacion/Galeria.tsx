@@ -12,6 +12,8 @@ export default function Galeria() {
   const brujulaRef = useRef<HTMLImageElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+
   const images = [
     "/images/gallery/foto1.jpeg",
     "/images/gallery/foto2.jpeg",
@@ -21,7 +23,6 @@ export default function Galeria() {
     "/images/gallery/foto6.jpeg",
     "/images/gallery/foto7.jpeg",
     "/images/gallery/foto8.jpeg",
-
   ]
 
   const [index, setIndex] = useState(0)
@@ -75,21 +76,37 @@ export default function Galeria() {
     )
   }, [index])
 
-  /* ⏱ Auto cambio cada 5s */
-  useEffect(() => {
-    const interval = setInterval(() => {
+  /* ▶️ Función para iniciar / reiniciar autoplay */
+  const startAutoPlay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+
+    intervalRef.current = setInterval(() => {
       setIndex(prev => (prev + 1) % images.length)
     }, 5000)
+  }
 
-    return () => clearInterval(interval)
+  /* ⏱ Iniciar autoplay */
+  useEffect(() => {
+    startAutoPlay()
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [])
 
+  /* 🔁 Navegación manual reinicia timer */
   const nextImage = () => {
     setIndex(prev => (prev + 1) % images.length)
+    startAutoPlay()
   }
 
   const prevImage = () => {
     setIndex(prev => (prev - 1 + images.length) % images.length)
+    startAutoPlay()
   }
 
   return (
@@ -103,10 +120,9 @@ export default function Galeria() {
         Algunos de nuestros mejores momentos
       </p>
 
-      {/* CONTENEDOR MARCO */}
       <div className="relative mx-auto w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl">
 
-        {/* 📸 IMAGEN DETRÁS DEL MARCO */}
+        {/* 📸 Imagen detrás del marco */}
         <div className="absolute inset-[12%] overflow-hidden rounded-md z-0">
           <img
             ref={imageRef}
@@ -116,57 +132,33 @@ export default function Galeria() {
           />
         </div>
 
-        {/* 🖼 MARCO */}
+        {/* 🖼 Marco */}
         <img
           src="/images/fondoGaleria.png"
           alt="Fondo galería"
           className="w-full h-auto block relative z-10"
         />
 
-        {/* 💻 Flechas laterales (solo desktop) */}
+        {/* 💻 Flechas desktop */}
         <div className="hidden md:block">
 
-          {/* IZQUIERDA */}
           <button
             onClick={prevImage}
-            className="
-              absolute
-              md:-left-16 lg:-left-24
-              top-1/2 -translate-y-1/2
-              z-30
-              bg-white/85 backdrop-blur
-              p-2
-              rounded-full
-              shadow-md
-              hover:scale-110 active:scale-95
-              transition
-            "
+            className="absolute md:-left-16 lg:-left-24 top-1/2 -translate-y-1/2 z-30 bg-white/85 backdrop-blur p-2 rounded-full shadow-md hover:scale-110 active:scale-95 transition"
           >
             <ChevronLeft size={20} />
           </button>
 
-          {/* DERECHA */}
           <button
             onClick={nextImage}
-            className="
-              absolute
-              md:-right-16 lg:-right-24
-              top-1/2 -translate-y-1/2
-              z-30
-              bg-white/85 backdrop-blur
-              p-2
-              rounded-full
-              shadow-md
-              hover:scale-110 active:scale-95
-              transition
-            "
+            className="absolute md:-right-16 lg:-right-24 top-1/2 -translate-y-1/2 z-30 bg-white/85 backdrop-blur p-2 rounded-full shadow-md hover:scale-110 active:scale-95 transition"
           >
             <ChevronRight size={20} />
           </button>
 
         </div>
 
-        {/* ICONOS DECORATIVOS */}
+        {/* ✈️ Iconos decorativos */}
         <img
           ref={pasaporteRef}
           src="/images/pasaporte.png"
@@ -197,7 +189,7 @@ export default function Galeria() {
 
       </div>
 
-      {/* 📱 Flechas debajo (solo móvil) */}
+      {/* 📱 Flechas móvil */}
       <div className="flex justify-center gap-6 mt-6 md:hidden">
         <button
           onClick={prevImage}
