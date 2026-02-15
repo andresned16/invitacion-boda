@@ -51,17 +51,14 @@ export default function Vestimenta() {
       </h2>
 
       <p className="text-lg text-[#5c4632] font-bentinck mt-2">
-        Queremos que este día sea tan especial para ti como lo será para nosotros.
-        Te invitamos a elegir un atuendo acorde a la ocasión.
+        Queremos recordarles, con mucho cariño, que lo más importante para nosotros es contar con su compañía. Las referencias de vestimenta son solo una guía para esta ocasión tan especial; vengan como se sientan cómodos, sin dejar de lado un estilo acorde a la ocasión.
       </p>
       {/* ================= MUJERES ================= */}
       <p className="text-xl text-[#5c4632] font-bentinck mt-10">
         MUJERES
       </p>
 
-      <p className="text-lg text-[#5c4632] font-bentinck mt-2">
-        Vestido largo en colores claros y neutros
-      </p>
+     
 
       <div className="flex justify-center mt-6">
         <img
@@ -99,9 +96,6 @@ export default function Vestimenta() {
         HOMBRES
       </p>
 
-      <p className="text-lg text-[#5c4632] font-bentinck mt-2">
-        Camisa manga larga y pantalón de lino o caqui
-      </p>
 
       <div className="flex justify-center mt-6">
         <img

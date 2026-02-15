@@ -41,23 +41,25 @@ export default function Sobres() {
 
     return (
         <section className="py-16 px-6 max-w-3xl mx-auto text-center">
+            <h2 className="font-kingsguard text-5xl text-[#7a5c3e] mb-8">
+                Lluvia de Sobres
+            </h2>
+
             <img
                 ref={sobresRef}
                 src="/images/sobres.png"
                 alt="Lluvia de sobres"
                 className="
-                    mx-auto
-                    w-24
-                    md:w-28
-                    object-contain
-                    opacity-90
-                    mb-8
-                "
+  mx-auto
+  w-28
+  md:w-36
+  object-contain
+  opacity-90
+  mb-6
+"
+
             />
 
-            <h2 className="font-kingsguard text-4xl text-[#7a5c3e]">
-                Lluvia de Sobres
-            </h2>
         </section>
     )
 }
