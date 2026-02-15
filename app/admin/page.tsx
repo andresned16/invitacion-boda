@@ -261,10 +261,15 @@ export default function AdminPage() {
 
 
 
-    const handleSaveFamilia = async (id: string, invitados: string[]) => {
-        await actualizarFamilia(id, invitados)
+    const handleSaveFamilia = async (
+        id: string,
+        invitados: string[],
+        comments: string
+    ) => {
+        await actualizarFamilia(id, invitados, comments)
         await fetchFamilias()
     }
+
 
 
     const deleteFamilia = async (id: string) => {

@@ -84,11 +84,23 @@ export default function CrearFamiliaModal({
   const mensajeCompartir = newUrl
     ? `💍✨ ${nombre},
 
-${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a celebrar nuestro gran día.
+Con muchísima ilusión en nuestros corazones queremos compartir ${esIndividual ? 'contigo' : 'con ustedes'
+    } la fecha de nuestro matrimonio.
 
-Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇
+En el enlace que ${esIndividual ? 'te enviamos' : 'les enviamos'
+    } encontrarán la invitación, donde también están todos los detalles de este día tan especial y, al final, los botones para confirmar ${esIndividual ? 'tu' : 'su'
+    } asistencia.
+
+Si por alguna razón no ${esIndividual ? 'puedes acompañarnos' : 'pueden acompañarnos'
+    }, ${esIndividual ? 'te agradecemos avisarnos' : 'les agradecemos avisarnos'
+    } con tiempo y por este medio. Aun así, esperamos de corazón que puedan hacer lo posible por estar, ya que sería muy especial para nosotros compartir este momento con ${esIndividual ? 'contigo' : 'ustedes'
+    }.
+
+Cualquier duda, no duden en escribirnos.
+
 ${newUrl}`
     : ''
+
 
 
   return (

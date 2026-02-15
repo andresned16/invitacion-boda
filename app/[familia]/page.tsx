@@ -352,7 +352,8 @@ export default function InvitacionPage() {
                 {
                   titulo: 'Recepción',
                   hora: '5:00 PM',
-                  lugar: 'Km 2 Vía al Caimo, Villa Juliana, Armenia, Quindío',
+                  lugar:
+                    'Km 2 Vía al Caimo, Villa Juliana, Armenia, Quindío',
                   ubicacionUrl:
                     'https://maps.app.goo.gl/y2Bpkje5uFEwBgfD8',
                 },
@@ -360,6 +361,7 @@ export default function InvitacionPage() {
             />
           </div>
         </section>
+
 
         <div className="fade-left">
           <Vestimenta />

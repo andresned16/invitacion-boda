@@ -13,13 +13,15 @@ type FamiliaAdmin = {
     cantidad_invitados: number
     confirmado: boolean
     created_at: string
+    comments: string | null
 }
+
 
 type Props = {
     familia: FamiliaAdmin | null
     open: boolean
     onClose: () => void
-    onSave: (id: string, invitados: string[]) => Promise<void>
+    onSave: (id: string, invitados: string[], comments: string) => Promise<void>
 }
 
 export default function EditarFamiliaModal({
@@ -32,6 +34,10 @@ export default function EditarFamiliaModal({
     const [seleccionados, setSeleccionados] = useState<string[]>(
         familia?.invitados_confirmados ?? []
     )
+    const [comentario, setComentario] = useState<string>(
+        familia?.comments ?? ''
+    )
+
 
     const [saving, setSaving] = useState(false)
     const [copiado, setCopiado] = useState(false)
@@ -50,10 +56,22 @@ export default function EditarFamiliaModal({
 
     const mensajeCompartir = `💍✨ ${familia.nombre_familia},
 
-${esIndividual ? 'Queremos invitarte' : 'Los queremos invitar'} a celebrar nuestro gran día.
+Con muchísima ilusión en nuestros corazones queremos compartir ${esIndividual ? 'contigo' : 'con ustedes'
+        } la fecha de nuestro matrimonio.
 
-Confirma ${esIndividual ? 'tu' : 'su'} asistencia aquí 👇
+En el enlace que ${esIndividual ? 'te enviamos' : 'les enviamos'
+        } encontrarán la invitación, donde también están todos los detalles de este día tan especial y, al final, los botones para confirmar ${esIndividual ? 'tu' : 'su'
+        } asistencia.
+
+Si por alguna razón no ${esIndividual ? 'puedes acompañarnos' : 'pueden acompañarnos'
+        }, ${esIndividual ? 'te agradecemos avisarnos' : 'les agradecemos avisarnos'
+        } con tiempo y por este medio. Aun así, esperamos de corazón que puedan hacer lo posible por estar, ya que sería muy especial para nosotros compartir este momento con ${esIndividual ? 'contigo' : 'ustedes'
+        }.
+
+Cualquier duda, no duden en escribirnos.
+
 ${link}`
+
 
 
     const toggleInvitado = (nombre: string) => {
@@ -66,7 +84,7 @@ ${link}`
 
     const handleSave = async () => {
         setSaving(true)
-        await onSave(familia.id, seleccionados)
+        await onSave(familia.id, seleccionados, comentario)
         setSaving(false)
         onClose()
     }
@@ -171,6 +189,28 @@ ${link}`
                                 {nombre}
                             </label>
                         ))}
+                    </div>
+                </div>
+                {/* Comentarios */}
+                <div className="mb-6">
+                    <label className="block font-semibold mb-2">
+                        Comentario (opcional)
+                    </label>
+
+                    <textarea
+                        value={comentario}
+                        onChange={(e) => {
+                            if (e.target.value.length <= 255) {
+                                setComentario(e.target.value)
+                            }
+                        }}
+                        maxLength={255}
+                        className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#5C4632]"
+                        placeholder="Escribe un comentario interno sobre esta familia..."
+                    />
+
+                    <div className="text-right text-xs text-gray-500 mt-1">
+                        {comentario.length}/255
                     </div>
                 </div>
 

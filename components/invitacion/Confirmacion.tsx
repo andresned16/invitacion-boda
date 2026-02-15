@@ -103,6 +103,41 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
 
     const mismaZona = userTimezone === timezoneEvento
 
+    const descargarEventoCalendario = () => {
+        // Fecha del evento (ejemplo: 20 de diciembre 2026 2:30pm hora Bogotá)
+        // ⚠️ Ajusta esta fecha real
+        const inicio = new Date('2026-12-20T14:30:00-05:00')
+        const fin = new Date('2026-12-20T18:30:00-05:00')
+
+        const formatearFechaICS = (date: Date) =>
+            date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+
+        const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Boda Karen y Andrés//ES
+BEGIN:VEVENT
+UID:${Date.now()}@boda.com
+DTSTAMP:${formatearFechaICS(new Date())}
+DTSTART:${formatearFechaICS(inicio)}
+DTEND:${formatearFechaICS(fin)}
+SUMMARY:Boda de Karen y Andrés
+DESCRIPTION:¡Nos encantaría compartir este día contigo!
+LOCATION:Colombia
+END:VEVENT
+END:VCALENDAR`
+
+        const blob = new Blob([icsContent], { type: 'text/calendar' })
+        const url = window.URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'Boda-Karen-y-Andres.ics'
+        a.click()
+
+        window.URL.revokeObjectURL(url)
+    }
+
+
     return (
         <section className="py-10 px-6">
             <h2 className="text-5xl font-kingsguard mb-6 text-[#7a5c3e]">
@@ -292,10 +327,31 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
                                 )}
 
                                 {confirmadoLocal && (
-                                    <p className="mt-6 text-green-700 font-semibold text-center tracking-wider">
-                                        ✔ ASISTENCIA CONFIRMADA
-                                    </p>
+                                    <div className="mt-6 text-center space-y-4">
+                                        <p className="text-green-700 font-semibold tracking-wider">
+                                            ✔ ASISTENCIA CONFIRMADA
+                                        </p>
+
+                                        <button
+                                            onClick={descargarEventoCalendario}
+                                            className="
+                w-full
+                border border-[#5c4632]
+                text-[#5c4632]
+                hover:bg-[#5c4632]
+                hover:text-white
+                transition
+                py-3
+                rounded-lg
+                text-xs
+                tracking-[0.25em]
+            "
+                                        >
+                                            AGREGAR AL CALENDARIO
+                                        </button>
+                                    </div>
                                 )}
+
                             </div>
 
                             {/* 🖥️ CODEBAR VERTICAL (DESKTOP) */}

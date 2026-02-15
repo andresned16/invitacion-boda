@@ -9,6 +9,7 @@ export type FamiliaAdmin = {
   cantidad_invitados: number
   confirmado: boolean
   created_at: string
+  comments: string | null
 }
 
 const SLUGS_RESERVADOS = ['admin', 'api', 'login', 'dashboard']
@@ -18,15 +19,17 @@ export async function obtenerFamilias(): Promise<FamiliaAdmin[]> {
   const { data, error } = await supabase
     .from('familias')
     .select(`
-      id,
-      nombre_familia,
-      slug_familia,
-      invitados_posibles,
-      invitados_confirmados,
-      cantidad_invitados,
-      confirmado,
-      created_at
-    `)
+  id,
+  nombre_familia,
+  slug_familia,
+  invitados_posibles,
+  invitados_confirmados,
+  cantidad_invitados,
+  confirmado,
+  created_at,
+  comments
+`)
+
     .order('nombre_familia')
 
   if (error) {
@@ -38,24 +41,27 @@ export async function obtenerFamilias(): Promise<FamiliaAdmin[]> {
 }
 
 // ✏️ Actualizar familia
-export async function actualizarFamilia(
+export const actualizarFamilia = async (
   id: string,
-  invitados: string[]
-) {
-  const confirmado = invitados.length > 0
-
-  return await supabase
+  invitados: string[],
+  comments: string
+) => {
+  const { error } = await supabase
     .from('familias')
     .update({
       invitados_confirmados: invitados,
       cantidad_invitados: invitados.length,
-      confirmado,
-      fecha_confirmacion: confirmado
-        ? new Date().toISOString()
-        : null,
+      confirmado: invitados.length > 0,
+      comments: comments || null,
     })
     .eq('id', id)
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
 }
+
 
 // 🗑 Eliminar familia
 export async function eliminarFamilia(id: string) {
