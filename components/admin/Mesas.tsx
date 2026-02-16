@@ -248,32 +248,42 @@ export default function Mesas() {
       <div className="bg-[#fdfaf6] border border-[#e8dfd6] rounded-2xl p-8 mb-10 shadow-sm">
         <h2 className="text-2xl font-bentinck text-[#7a5c3e] text-center mb-8">Mesas</h2>
 
-        <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="Nombre mesa (Ej: Mesa 1)"
-            value={nombreMesa}
-            onChange={(e) => setNombreMesa(e.target.value)}
-            className="border p-2 rounded w-48"
-          />
+        <div className="flex flex-wrap gap-3 items-end">
+          {/* Nombre de mesa */}
+          <div className="flex flex-col">
+            <label className="text-sm text-[#7a5c3e] mb-1 text-left">Nombre de mesa</label>
+            <input
+              type="text"
+              placeholder="Ej: Mesa 1"
+              value={nombreMesa}
+              onChange={(e) => setNombreMesa(e.target.value)}
+              className="border p-2 rounded w-48"
+            />
+          </div>
 
-          <input
-            type="number"
-            value={capacidad}
-            onChange={(e) => setCapacidad(Number(e.target.value))}
-            className="border p-2 rounded w-24"
-            min={1}
-          />
+          {/* Cantidad */}
+          <div className="flex flex-col">
+            <label className="text-sm text-[#7a5c3e] mb-1 text-left">Cantidad</label>
+            <input
+              type="number"
+              value={capacidad}
+              onChange={(e) => setCapacidad(Number(e.target.value))}
+              className="border p-2 rounded w-24"
+              min={1}
+            />
+          </div>
 
+          {/* Botón agregar */}
           <button
             onClick={agregarMesa}
-            className="bg-[#5C4632] text-white px-4 rounded flex items-center gap-2"
+            className="bg-[#5C4632] text-white px-4 py-2 rounded flex items-center gap-2 flex-shrink-0"
           >
             <Plus size={16} />
             Agregar
           </button>
         </div>
       </div>
+
 
       {/* Listado mesas */}
       <div className="grid md:grid-cols-2 gap-6">
