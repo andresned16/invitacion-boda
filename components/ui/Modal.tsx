@@ -16,18 +16,19 @@ export default function Modal({ open, onClose, children }: ModalProps) {
         >
             <div
                 className="
-        relative 
-        bg-[#FDEEDC]            /* curuba claro */
-        rounded-3xl
-        shadow-2xl
-        w-full max-w-lg 
-        p-6 
-        border-8 
-        border-guayaba-trenza 
-        transform transition-transform duration-300
-        hover:scale-105
-        before:absolute before:inset-0 before:rounded-3xl before:border-4 before:border-dashed before:border-guayaba-trenza before:pointer-events-none
-    "
+    relative
+    bg-[#FDEEDC]
+    rounded-3xl
+    shadow-2xl
+    w-full
+    max-w-lg
+    max-h-[90vh]
+    flex
+    flex-col
+    border-8
+    border-guayaba-trenza
+    before:absolute before:inset-0 before:rounded-3xl before:border-4 before:border-dashed before:border-guayaba-trenza before:pointer-events-none
+  "
                 onClick={(e) => e.stopPropagation()}
             >
                 {children}

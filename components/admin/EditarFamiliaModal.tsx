@@ -158,7 +158,7 @@ ${link}`
 
     return (
         <Modal open={open} onClose={onClose}>
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-6 overflow-y-auto">
 
                 {/* 🔹 Nombre Familia */}
                 <div>

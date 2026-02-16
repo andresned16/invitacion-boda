@@ -118,7 +118,7 @@ ${newUrl}`
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <div className="p-6">
+      <div className="p-6 overflow-y-auto">
 
         <h2 className="text-xl font-bold mb-4">
           ➕ Agregar familia
