@@ -245,8 +245,8 @@ export default function Mesas() {
     <div className="space-y-8">
 
       {/* Crear mesa */}
-      <div className="bg-white p-6 rounded-xl shadow space-y-4">
-        <h2 className="text-xl font-bold">Mesas</h2>
+      <div className="bg-[#fdfaf6] border border-[#e8dfd6] rounded-2xl p-8 mb-10 shadow-sm">
+        <h2 className="text-2xl font-bentinck text-[#7a5c3e] text-center mb-8">Mesas</h2>
 
         <div className="flex gap-3">
           <input
