@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Boda Karen y Andrés",
     images: [
       {
-        url: "/og-boda.jpg",
+        url: "https://boda-karen-andres-umber.vercel.app/og-boda.jpg",
         width: 1200,
         height: 630,
         alt: "Invitación Boda Karen y Andrés",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Boda Karen y Andrés",
     description: "Acompáñanos en este momento tan especial 💍",
-    images: ["/og-boda.jpg"],
+    images: ["https://boda-karen-andres-umber.vercel.app/og-boda.jpg"],
   },
 }
 

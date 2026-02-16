@@ -91,7 +91,7 @@ Con muchísima ilusión en nuestros corazones queremos compartir ${esIndividual 
     } la fecha de nuestro matrimonio.
 
 En el enlace que ${esIndividual ? 'te enviamos' : 'les enviamos'
-    } encontrarán la invitación, donde también están todos los detalles de este día tan especial y, al final, los botones para confirmar ${esIndividual ? 'tu' : 'su'
+    } ${esIndividual ? 'encontrarás' : 'encontrarán'} la invitación, donde también están todos los detalles de este día tan especial y, al final, los botones para confirmar ${esIndividual ? 'tu' : 'su'
     } asistencia.
 
 Si por alguna razón no ${esIndividual ? 'puedes acompañarnos' : 'pueden acompañarnos'
@@ -103,6 +103,7 @@ Cualquier inquietud, no duden en escribirnos.
 
 ${newUrl}`
     : ''
+
 
 
 
