@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Modal from '@/components/ui/Modal'
-import { Copy, Share2, Check } from 'lucide-react'
+import { Copy, Share2, Check, ClipboardCopy } from 'lucide-react'
+
 
 type Props = {
   open: boolean
@@ -24,6 +25,8 @@ export default function CrearFamiliaModal({
   const [newUrl, setNewUrl] = useState<string | null>(null)
   const [copiado, setCopiado] = useState(false)
   const [compartido, setCompartido] = useState(false)
+  const [copiadoMensaje, setCopiadoMensaje] = useState(false)
+
 
   const reset = () => {
     setNombre('')
@@ -96,7 +99,7 @@ Si por alguna razón no ${esIndividual ? 'puedes acompañarnos' : 'pueden acompa
     } con tiempo y por este medio. Aun así, esperamos de corazón que puedan hacer lo posible por estar, ya que sería muy especial para nosotros compartir este momento con ${esIndividual ? 'contigo' : 'ustedes'
     }.
 
-Cualquier duda, no duden en escribirnos.
+Cualquier inquietud, no duden en escribirnos.
 
 ${newUrl}`
     : ''
@@ -198,20 +201,41 @@ ${newUrl}`
                   <Share2 size={16} />
                 </button>
 
+
+                {/* Copiar invitación completa */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(mensajeCompartir)
+                    setCopiadoMensaje(true)
+                    setTimeout(() => setCopiadoMensaje(false), 2000)
+                  }}
+                  className="text-gray-500 hover:text-purple-600"
+                  title="Copiar invitación completa"
+                >
+                  <ClipboardCopy size={16} />
+                </button>
+
+
               </div>
             </div>
 
             {copiado && (
               <div className="flex items-center gap-1 text-green-600 text-xs">
                 <Check size={14} />
-                ¡Copiado!
+                ¡Link Copiado!
+              </div>
+            )}
+            {copiadoMensaje && (
+              <div className="flex items-center gap-1 text-green-600 text-xs">
+                <Check size={14} />
+                Invitación copiada
               </div>
             )}
 
             {compartido && (
               <div className="flex items-center gap-1 text-green-600 text-xs">
                 <Check size={14} />
-                ¡Compartido!
+                ¡Link Compartido!
               </div>
             )}
 

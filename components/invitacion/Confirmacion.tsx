@@ -104,10 +104,11 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
     const mismaZona = userTimezone === timezoneEvento
 
     const descargarEventoCalendario = () => {
-        // Fecha del evento (ejemplo: 20 de diciembre 2026 2:30pm hora Bogotá)
+  
         // ⚠️ Ajusta esta fecha real
-        const inicio = new Date('2026-12-20T14:30:00-05:00')
-        const fin = new Date('2026-12-20T18:30:00-05:00')
+        const inicio = new Date('2026-06-28T14:30:00-05:00')
+        const fin = new Date('2026-06-28T18:30:00-05:00')
+
 
         const formatearFechaICS = (date: Date) =>
             date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'

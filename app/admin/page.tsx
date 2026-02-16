@@ -37,6 +37,7 @@ export default function AdminPage() {
     const [loading, setLoading] = useState(false)
     const [familiaActiva, setFamiliaActiva] = useState<FamiliaAdmin | null>(null)
 
+
     const [autorizado, setAutorizado] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false
         return sessionStorage.getItem('admin-auth') === 'true'
@@ -263,12 +264,25 @@ export default function AdminPage() {
 
     const handleSaveFamilia = async (
         id: string,
-        invitados: string[],
+        nombreFamilia: string,
+        invitadosPosibles: string[],
+        invitadosConfirmados: string[],
         comments: string
     ) => {
-        await actualizarFamilia(id, invitados, comments)
+
+        await actualizarFamilia(
+            id,
+            nombreFamilia,
+            invitadosPosibles,
+            invitadosConfirmados,
+            comments
+        )
+
         await fetchFamilias()
     }
+
+
+
 
 
 
@@ -392,6 +406,7 @@ export default function AdminPage() {
                     onClose={closeModal}
                     onSave={handleSaveFamilia}
                 />
+
 
                 <CrearFamiliaModal
                     open={showAddModal}

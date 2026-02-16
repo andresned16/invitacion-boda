@@ -41,26 +41,28 @@ export async function obtenerFamilias(): Promise<FamiliaAdmin[]> {
 }
 
 // ✏️ Actualizar familia
-export const actualizarFamilia = async (
+export async function actualizarFamilia(
   id: string,
-  invitados: string[],
+  nombreFamilia: string,
+  invitadosPosibles: string[],
+  invitadosConfirmados: string[],
   comments: string
-) => {
+) {
   const { error } = await supabase
     .from('familias')
     .update({
-      invitados_confirmados: invitados,
-      cantidad_invitados: invitados.length,
-      confirmado: invitados.length > 0,
-      comments: comments || null,
+      nombre_familia: nombreFamilia,
+      invitados_posibles: invitadosPosibles,
+      invitados_confirmados: invitadosConfirmados,
+      comments,
+      cantidad_invitados: invitadosConfirmados.length,
+      confirmado: invitadosConfirmados.length > 0
     })
     .eq('id', id)
 
-  if (error) {
-    console.error(error)
-    throw error
-  }
+  if (error) throw error
 }
+
 
 
 // 🗑 Eliminar familia
@@ -138,7 +140,9 @@ export async function crearFamilia(
       invitados_confirmados: [],
       cantidad_invitados: 0,
       confirmado: false,
+      comments: ''  
     })
+
 
   if (error) {
     console.error(error)
