@@ -95,10 +95,21 @@ ${link}`
     }
 
     const updateNombreInvitado = (index: number, value: string) => {
-        const copia = [...invitadosEditables]
-        copia[index] = value
-        setInvitadosEditables(copia)
+        setInvitadosEditables(prev => {
+            const copia = [...prev]
+            const nombreAnterior = copia[index]
+            copia[index] = value
+
+            setSeleccionados(prevSel =>
+                prevSel.map(n =>
+                    n === nombreAnterior ? value : n
+                )
+            )
+
+            return copia
+        })
     }
+
 
     const eliminarInvitado = (index: number) => {
         const nombreEliminado = invitadosEditables[index]
