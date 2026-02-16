@@ -10,10 +10,13 @@ type InvitadoDB = {
   id: string
   nombre: string
   confirmado: boolean
-  familias: {
+  mesa_id: string | null
+  familia: {
     nombre_familia: string
   } | null
 }
+
+
 
 type Invitado = {
   id: string
@@ -40,68 +43,86 @@ export default function Mesas() {
   /* ------------------ CARGAR INVITADOS ------------------ */
 
   useEffect(() => {
-    const fetchMesas = async () => {
-      const { data, error } = await supabase
+    const fetchData = async () => {
+
+      // 1️⃣ Traer mesas
+      const { data: mesasData, error: mesasError } = await supabase
         .from('mesas')
         .select('*')
 
-      if (error) {
-        console.error('Error cargando mesas:', error)
+      if (mesasError) {
+        console.error('Error cargando mesas:', mesasError)
         return
       }
 
-      if (!data) return
+      // 2️⃣ Traer invitados confirmados (con mesa_id)
+      const { data: invitadosData, error: invitadosError } =
+        await supabase
+          .from('invitados')
+          .select(`
+      id,
+      nombre,
+      confirmado,
+      mesa_id,
+      familia:familia_id (
+        nombre_familia
+      )
+    `)
+          .eq('confirmado', true)
 
-      const mesasFormateadas: Mesa[] = data.map((mesa) => ({
-        id: mesa.id,
-        nombre: mesa.nombre,
-        capacidad: mesa.capacidad,
-        invitados: []
-      }))
+      const invitados = invitadosData as InvitadoDB[] | null
+
+
+      if (invitadosError) {
+        console.error('Error cargando invitados:', invitadosError)
+        return
+      }
+
+      if (!mesasData) return
+
+      // 3️⃣ Construir mesas con invitados asignados
+      const mesasFormateadas: Mesa[] = mesasData.map((mesa) => {
+
+        const invitadosDeMesa: Invitado[] =
+          invitados
+            ?.filter((inv) => inv.mesa_id === mesa.id)
+
+            .map((inv) => ({
+              id: inv.id,
+              nombre: inv.nombre,
+              confirmado: inv.confirmado,
+              familia: inv.familia?.nombre_familia ?? 'Sin familia'
+
+            })) || []
+
+        return {
+          id: mesa.id,
+          nombre: mesa.nombre,
+          capacidad: mesa.capacidad,
+          invitados: invitadosDeMesa
+        }
+      })
 
       setMesas(mesasFormateadas)
+
+      // 4️⃣ Invitados disponibles (los que no tienen mesa)
+      const disponibles: Invitado[] =
+        invitados
+          ?.filter((inv) => !inv.mesa_id)
+          .map((inv) => ({
+            id: inv.id,
+            nombre: inv.nombre,
+            confirmado: inv.confirmado,
+            familia: inv.familia?.nombre_familia ?? 'Sin familia'
+
+
+          })) || []
+
+      setInvitadosConfirmados(disponibles)
     }
 
-    fetchMesas()
+    fetchData()
   }, [])
-
-  /* ------------------ AGREGAR INVITADOS A MESAS ------------------ */
-
-  useEffect(() => {
-  const fetchInvitados = async () => {
-    const { data, error } = await supabase
-      .from('invitados')
-      .select(`
-        id,
-        nombre,
-        confirmado,
-        familias:familia_id (
-          nombre_familia
-        )
-      `)
-      .eq('confirmado', true)
-      .is('mesa_id', null) // 🔥 IMPORTANTE: solo los que no tienen mesa
-      .returns<InvitadoDB[]>()
-
-    if (error) {
-      console.error('Error cargando invitados:', error)
-      return
-    }
-
-    if (!data) return
-
-    const invitadosFormateados: Invitado[] = data.map((inv) => ({
-      id: inv.id,
-      nombre: inv.nombre,
-      confirmado: inv.confirmado,
-      familia: inv.familias?.nombre_familia ?? 'Sin familia'
-    }))
-
-    setInvitadosConfirmados(invitadosFormateados)
-  }
-
-  fetchInvitados()
-}, [])
 
 
 
@@ -136,9 +157,34 @@ export default function Mesas() {
   }
 
 
-  const eliminarMesa = (id: string) => {
+  const eliminarMesa = async (id: string) => {
+
+    // 1️⃣ Liberar invitados asignados a esa mesa
+    const { error: updateError } = await supabase
+      .from('invitados')
+      .update({ mesa_id: null })
+      .eq('mesa_id', id)
+
+    if (updateError) {
+      console.error('Error liberando invitados:', updateError)
+      return
+    }
+
+    // 2️⃣ Borrar la mesa
+    const { error: deleteError } = await supabase
+      .from('mesas')
+      .delete()
+      .eq('id', id)
+
+    if (deleteError) {
+      console.error('Error eliminando mesa:', deleteError)
+      return
+    }
+
+    // 3️⃣ Actualizar estado local
     setMesas((prev) => prev.filter((m) => m.id !== id))
   }
+
 
   const asignarInvitado = async (mesaId: string, invitado: Invitado) => {
 
