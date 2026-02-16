@@ -99,8 +99,9 @@ export default function FamiliasTable({
               <th className="p-3 text-center">Confirmados</th>
               <th className="p-3 text-center">Nombres confirmados</th>
               <th className="p-3 text-center">Anfitrión</th>
+              <th className="p-3 text-center">Mesa</th>
               <th className="p-3 text-center">Notas</th>
-              <th className="p-3 text-center">Acciones</th>
+
             </tr>
           </thead>
 

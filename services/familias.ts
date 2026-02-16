@@ -11,6 +11,7 @@ export type FamiliaAdmin = {
   created_at: string
   comments: string | null
   anfitrion: string
+  mesa_nombre?: string | null
 }
 
 const SLUGS_RESERVADOS = ['admin', 'api', 'login', 'dashboard']
