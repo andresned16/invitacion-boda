@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import Modal from '@/components/ui/Modal'
 import { Copy, Check, Share2, Trash2, Plus, ClipboardCopy } from "lucide-react"
+import AnfitrionSelect from './AnfitrionSelect'
+
 
 type FamiliaAdmin = {
     id: string
@@ -14,6 +16,7 @@ type FamiliaAdmin = {
     confirmado: boolean
     created_at: string
     comments: string | null
+    anfitrion: string
 }
 
 type Props = {
@@ -25,9 +28,12 @@ type Props = {
         nombreFamilia: string,
         invitadosPosibles: string[],
         invitadosConfirmados: string[],
-        comments: string
+        comments: string,
+        anfitrion: string
     ) => Promise<void>
 }
+
+
 
 export default function EditarFamiliaModal({
     familia,
@@ -45,6 +51,8 @@ export default function EditarFamiliaModal({
     const [copiado, setCopiado] = useState(false)
     const [copiadoMensaje, setCopiadoMensaje] = useState(false)
     const [compartido, setCompartido] = useState(false)
+    const [anfitrion, setAnfitrion] = useState('')
+
 
     useEffect(() => {
         if (!familia) return
@@ -53,6 +61,7 @@ export default function EditarFamiliaModal({
         setInvitadosEditables(familia.invitados_posibles)
         setSeleccionados(familia.invitados_confirmados ?? [])
         setComentario(familia.comments ?? '')
+        setAnfitrion(familia.anfitrion ?? '')
     }, [familia])
 
     if (!familia) return null
@@ -137,7 +146,8 @@ ${link}`
                 nombreFamilia,
                 invitadosEditables,
                 seleccionados,
-                comentario
+                comentario,
+                anfitrion
             )
 
             onClose()
@@ -288,6 +298,18 @@ ${link}`
                             </div>
                         ))}
                     </div>
+                    {/* 🔹 Invitado de (Anfitrión) */}
+                    <div>
+                        <label className="block font-semibold mb-2">
+                            Invitado de
+                        </label>
+
+                        <AnfitrionSelect
+                            value={anfitrion}
+                            onChange={setAnfitrion}
+                        />
+                    </div>
+
                 </div>
 
                 {/* 🔹 Comentario */}

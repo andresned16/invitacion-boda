@@ -267,7 +267,8 @@ export default function AdminPage() {
         nombreFamilia: string,
         invitadosPosibles: string[],
         invitadosConfirmados: string[],
-        comments: string
+        comments: string,
+        anfitrion: string   // 👈 nuevo
     ) => {
 
         await actualizarFamilia(
@@ -275,11 +276,13 @@ export default function AdminPage() {
             nombreFamilia,
             invitadosPosibles,
             invitadosConfirmados,
-            comments
+            comments,
+            anfitrion   // 👈 pásalo
         )
 
         await fetchFamilias()
     }
+
 
 
 
@@ -411,8 +414,9 @@ export default function AdminPage() {
                 <CrearFamiliaModal
                     open={showAddModal}
                     onClose={() => setShowAddModal(false)}
-                    onCreate={async (nombre, invitados) => {
-                        const slug = await crearFamilia(nombre, invitados)
+                    onCreate={async (nombre, invitados, anfitrion) => {
+                        const slug = await crearFamilia(nombre, invitados, anfitrion)
+
 
                         if (slug) {
                             await fetchFamilias()

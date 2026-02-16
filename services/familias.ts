@@ -10,6 +10,7 @@ export type FamiliaAdmin = {
   confirmado: boolean
   created_at: string
   comments: string | null
+  anfitrion: string
 }
 
 const SLUGS_RESERVADOS = ['admin', 'api', 'login', 'dashboard']
@@ -19,17 +20,17 @@ export async function obtenerFamilias(): Promise<FamiliaAdmin[]> {
   const { data, error } = await supabase
     .from('familias')
     .select(`
-  id,
-  nombre_familia,
-  slug_familia,
-  invitados_posibles,
-  invitados_confirmados,
-  cantidad_invitados,
-  confirmado,
-  created_at,
-  comments
-`)
-
+      id,
+      nombre_familia,
+      slug_familia,
+      invitados_posibles,
+      invitados_confirmados,
+      cantidad_invitados,
+      confirmado,
+      created_at,
+      comments,
+      anfitrion
+    `)
     .order('nombre_familia')
 
   if (error) {
@@ -46,7 +47,8 @@ export async function actualizarFamilia(
   nombreFamilia: string,
   invitadosPosibles: string[],
   invitadosConfirmados: string[],
-  comments: string
+  comments: string,
+  anfitrion: string
 ) {
   const { error } = await supabase
     .from('familias')
@@ -55,6 +57,7 @@ export async function actualizarFamilia(
       invitados_posibles: invitadosPosibles,
       invitados_confirmados: invitadosConfirmados,
       comments,
+      anfitrion,
       cantidad_invitados: invitadosConfirmados.length,
       confirmado: invitadosConfirmados.length > 0
     })
@@ -62,8 +65,6 @@ export async function actualizarFamilia(
 
   if (error) throw error
 }
-
-
 
 // 🗑 Eliminar familia
 export async function eliminarFamilia(id: string) {
@@ -127,7 +128,8 @@ export async function generarSlugUnico(nombre: string) {
 // ➕ Crear familia
 export async function crearFamilia(
   nombre: string,
-  invitados: string[]
+  invitados: string[],
+  anfitrion: string
 ) {
   const slug = await generarSlugUnico(nombre)
 
@@ -140,9 +142,9 @@ export async function crearFamilia(
       invitados_confirmados: [],
       cantidad_invitados: 0,
       confirmado: false,
-      comments: ''  
+      comments: '',
+      anfitrion
     })
-
 
   if (error) {
     console.error(error)

@@ -2,13 +2,19 @@
 
 import { useState } from 'react'
 import Modal from '@/components/ui/Modal'
+import AnfitrionSelect from './AnfitrionSelect'
 import { Copy, Share2, Check, ClipboardCopy } from 'lucide-react'
 
 
 type Props = {
   open: boolean
   onClose: () => void
-  onCreate: (nombre: string, invitados: string[]) => Promise<string | null>
+  onCreate: (
+    nombre: string,
+    invitados: string[],
+    anfitrion: string
+  ) => Promise<string | null>
+
 }
 
 const MAX_INVITADOS = 10
@@ -26,6 +32,8 @@ export default function CrearFamiliaModal({
   const [copiado, setCopiado] = useState(false)
   const [compartido, setCompartido] = useState(false)
   const [copiadoMensaje, setCopiadoMensaje] = useState(false)
+  const [anfitrion, setAnfitrion] = useState('')
+
 
 
   const reset = () => {
@@ -58,6 +66,7 @@ export default function CrearFamiliaModal({
 
   const handleCreate = async () => {
     if (!nombre.trim()) return
+    if (!anfitrion) return
 
     const invitadosLimpios = invitados
       .map(i => i.trim())
@@ -67,7 +76,7 @@ export default function CrearFamiliaModal({
 
     setCreating(true)
 
-    const url = await onCreate(nombre, invitadosLimpios)
+    const url = await onCreate(nombre, invitadosLimpios, anfitrion)
 
     if (url) {
       setNewUrl(url)
@@ -125,6 +134,10 @@ ${newUrl}`
             onChange={(e) => setNombre(e.target.value)}
           />
         </label>
+        <AnfitrionSelect
+          value={anfitrion}
+          onChange={setAnfitrion}
+        />
 
         <div className="mb-4">
           <span className="text-sm font-medium">Invitados</span>

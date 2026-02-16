@@ -89,7 +89,7 @@ export default function FamiliasTable({
           />
         )}
 
-        <table className="w-full min-w-[1050px] bg-[#fffaf6] border-collapse">
+        <table className="w-full min-w-[1150px] bg-[#fffaf6] border-collapse">
 
           <thead className="bg-[#f3eae2] text-sm text-[#5C4632]">
             <tr>
@@ -98,6 +98,7 @@ export default function FamiliasTable({
               <th className="p-3 text-center">Cupos</th>
               <th className="p-3 text-center">Confirmados</th>
               <th className="p-3 text-center">Nombres confirmados</th>
+              <th className="p-3 text-center">Anfitrión</th>
               <th className="p-3 text-center">Notas</th>
               <th className="p-3 text-center">Acciones</th>
             </tr>
@@ -142,6 +143,14 @@ export default function FamiliasTable({
                 <td className="p-3">
                   {f.invitados_confirmados?.join(', ') || '—'}
                 </td>
+                <td className="p-3 text-center">
+                  {f.anfitrion === 'andres'
+                    ? 'Andrés'
+                    : f.anfitrion === 'karen'
+                      ? 'Karen'
+                      : '—'}
+                </td>
+
 
                 {/* NUEVA COLUMNA NOTAS */}
                 <td className="p-3 text-center relative">
