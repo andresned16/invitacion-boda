@@ -50,6 +50,7 @@ export async function actualizarFamilia(
   comments: string,
   anfitrion: string
 ) {
+  // 1️⃣ Actualizar tabla familias
   const { error } = await supabase
     .from('familias')
     .update({
@@ -64,7 +65,65 @@ export async function actualizarFamilia(
     .eq('id', id)
 
   if (error) throw error
+
+  // -------------------------------------
+  // 2️⃣ SINCRONIZAR TABLA INVITADOS
+  // -------------------------------------
+
+  // Obtener invitados actuales en BD
+  const { data: invitadosActuales } = await supabase
+    .from('invitados')
+    .select('*')
+    .eq('familia_id', id)
+
+  const nombresActuales = invitadosActuales?.map(i => i.nombre) ?? []
+
+  // 🔹 A) Insertar nuevos invitados
+  const nuevos = invitadosPosibles.filter(
+    nombre => !nombresActuales.includes(nombre)
+  )
+
+  if (nuevos.length > 0) {
+    await supabase.from('invitados').insert(
+      nuevos.map(nombre => ({
+        familia_id: id,
+        nombre,
+        confirmado: invitadosConfirmados.includes(nombre),
+        anfitrion
+      }))
+    )
+  }
+
+  // 🔹 B) Eliminar invitados borrados
+  const eliminados = nombresActuales.filter(
+    nombre => !invitadosPosibles.includes(nombre)
+  )
+
+  if (eliminados.length > 0) {
+    await supabase
+      .from('invitados')
+      .delete()
+      .eq('familia_id', id)
+      .in('nombre', eliminados)
+  }
+
+  // 🔹 C) Actualizar confirmados
+  // Primero todos en false
+  await supabase
+    .from('invitados')
+    .update({ confirmado: false })
+    .eq('familia_id', id)
+
+  // Luego marcar solo seleccionados
+  if (invitadosConfirmados.length > 0) {
+    await supabase
+      .from('invitados')
+      .update({ confirmado: true })
+      .eq('familia_id', id)
+      .in('nombre', invitadosConfirmados)
+  }
 }
+
 
 // 🗑 Eliminar familia
 export async function eliminarFamilia(id: string) {
@@ -126,6 +185,7 @@ export async function generarSlugUnico(nombre: string) {
 }
 
 // ➕ Crear familia
+// ➕ Crear familia
 export async function crearFamilia(
   nombre: string,
   invitados: string[],
@@ -133,7 +193,8 @@ export async function crearFamilia(
 ) {
   const slug = await generarSlugUnico(nombre)
 
-  const { error } = await supabase
+  // 1️⃣ Crear familia y obtener el registro creado
+  const { data: familia, error } = await supabase
     .from('familias')
     .insert({
       nombre_familia: nombre,
@@ -145,10 +206,28 @@ export async function crearFamilia(
       comments: '',
       anfitrion
     })
+    .select()
+    .single()
 
-  if (error) {
+  if (error || !familia) {
     console.error(error)
     return null
+  }
+
+  // 2️⃣ Insertar invitados en tabla "invitados"
+  const invitadosInsert = invitados.map((nombreInvitado) => ({
+    familia_id: familia.id,
+    nombre: nombreInvitado,
+    confirmado: false,
+    mesa_id: null
+  }))
+
+  const { error: errorInvitados } = await supabase
+    .from('invitados')
+    .insert(invitadosInsert)
+
+  if (errorInvitados) {
+    console.error('Error insertando invitados:', errorInvitados)
   }
 
   return slug

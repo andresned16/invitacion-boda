@@ -70,6 +70,7 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
 
         setGuardando(true)
 
+        // 1️⃣ Actualizar tabla familias
         const { error } = await supabase
             .from('familias')
             .update({
@@ -80,15 +81,29 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
             })
             .eq('id', familia.id)
 
-        setGuardando(false)
-
         if (error) {
+            setGuardando(false)
             setError('Ocurrió un error al confirmar. Intenta nuevamente.')
             return
         }
 
+        // 2️⃣ Primero poner TODOS en false
+        await supabase
+            .from('invitados')
+            .update({ confirmado: false })
+            .eq('familia_id', familia.id)
+
+        // 3️⃣ Luego marcar solo los seleccionados como true
+        await supabase
+            .from('invitados')
+            .update({ confirmado: true })
+            .eq('familia_id', familia.id)
+            .in('nombre', invitadosFinales)
+
+        setGuardando(false)
         setConfirmadoLocal(true)
     }
+
 
     const formatDate = (date: Date, timeZone: string) =>
         date.toLocaleString('es-CO', {
@@ -104,7 +119,7 @@ export default function Confirmacion({ familia }: { familia: Familia }) {
     const mismaZona = userTimezone === timezoneEvento
 
     const descargarEventoCalendario = () => {
-  
+
         // ⚠️ Ajusta esta fecha real
         const inicio = new Date('2026-06-28T14:30:00-05:00')
         const fin = new Date('2026-06-28T18:30:00-05:00')

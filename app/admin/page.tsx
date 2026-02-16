@@ -18,6 +18,7 @@ import FamiliasTable from '@/components/admin/FamiliasTable'
 import EditarFamiliaModal from '@/components/admin/EditarFamiliaModal'
 import CrearFamiliaModal from '@/components/admin/CrearFamiliaModal'
 import type { FamiliaAdmin } from '@/services/familias'
+import Mesas from '@/components/admin/Mesas';
 
 
 
@@ -64,6 +65,8 @@ export default function AdminPage() {
         setRowsPerPage(10); // o el valor por defecto que uses
     };
 
+    const [anfitrionFiltro, setAnfitrionFiltro] =
+        useState<'todos' | 'andres' | 'karen'>('todos')
 
 
 
@@ -119,6 +122,15 @@ export default function AdminPage() {
     const closeModal = () => {
         setFamiliaActiva(null)
     }
+    //Mesa
+
+    const invitadosConfirmadosGlobal = familias.flatMap(f =>
+        (f.invitados_confirmados ?? []).map(nombre => ({
+            nombre,
+            familia: f.nombre_familia
+        }))
+    )
+
 
 
     // 🔐 LOGIN
@@ -321,6 +333,9 @@ export default function AdminPage() {
 
             if (cuposFiltro === 'completo' && confirmados < total) return false
             if (cuposFiltro === 'disponible' && confirmados >= total) return false
+            // 👰🤵 Anfitrión
+            if (anfitrionFiltro !== 'todos' && f.anfitrion !== anfitrionFiltro)
+                return false
 
             return true
         })
@@ -334,6 +349,7 @@ export default function AdminPage() {
                     return a.nombre_familia.localeCompare(b.nombre_familia)
                 case 'za':
                     return b.nombre_familia.localeCompare(a.nombre_familia)
+
                 default:
                     return 0
             }
@@ -385,6 +401,8 @@ export default function AdminPage() {
                     setRowsPerPage={setRowsPerPage}
                     resetFiltros={resetFiltros}
                     hayFiltrosActivos={hayFiltrosActivos}
+                    anfitrionFiltro={anfitrionFiltro}
+                    setAnfitrionFiltro={setAnfitrionFiltro}
                 />
 
 
@@ -431,6 +449,7 @@ export default function AdminPage() {
 
             </main>
             <FechaLimiteConfirmacion />
+           <Mesas />
 
         </Decoracion >
 
