@@ -19,6 +19,7 @@ import EditarFamiliaModal from '@/components/admin/EditarFamiliaModal'
 import CrearFamiliaModal from '@/components/admin/CrearFamiliaModal'
 import type { FamiliaAdmin } from '@/services/familias'
 import Mesas from '@/components/admin/Mesas';
+import FinanzasPanel from '@/components/admin/FinanzasPanel'
 
 
 
@@ -449,8 +450,8 @@ export default function AdminPage() {
 
             </main>
             <FechaLimiteConfirmacion />
-           <Mesas />
-
+            <Mesas />
+            <FinanzasPanel />
         </Decoracion >
 
     )
