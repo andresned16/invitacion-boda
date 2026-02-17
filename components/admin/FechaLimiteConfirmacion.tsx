@@ -3,7 +3,13 @@
 const CONFIG_ID = '115026b7-0617-479d-8518-be50386e212b'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
 
 /* =========================
    ZONAS HORARIAS DISPONIBLES
@@ -222,7 +228,7 @@ export default function FechaLimiteConfirmacion() {
           <button
             onClick={guardar}
             disabled={guardando}
-            className="px-8 py-3 bg-[#5C4632] text-white rounded-xl font-medium tracking-wide hover:opacity-90 transition disabled:opacity-50"
+            className="px-8 py-3 bg-[#5C4632] text-white rounded font-medium tracking-wide hover:opacity-90 transition disabled:opacity-50"
           >
             {guardando ? 'Guardando…' : 'Guardar configuración'}
           </button>

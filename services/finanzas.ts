@@ -1,5 +1,3 @@
-import { supabase } from '@/lib/supabase'
-
 export type FinanzaDB = {
   id: string
   concepto: string
@@ -9,18 +7,15 @@ export type FinanzaDB = {
 }
 
 // Obtener todas
-export async function obtenerFinanzas() {
-  const { data, error } = await supabase
-    .from('finanzas')
-    .select('*')
-    .order('created_at', { ascending: true })
+export async function obtenerFinanzas(): Promise<FinanzaDB[]> {
+  const res = await fetch('/api/finanzas')
 
-  if (error) {
-    console.error(error)
+  if (!res.ok) {
+    console.error('Error obteniendo finanzas')
     return []
   }
 
-  return data as FinanzaDB[]
+  return res.json()
 }
 
 // Crear
@@ -29,11 +24,11 @@ export async function crearFinanza(
   presupuesto: number,
   pagado: number
 ) {
-  const { error } = await supabase.from('finanzas').insert([
-    { concepto, presupuesto, pagado }
-  ])
-
-  if (error) console.error(error)
+  await fetch('/api/finanzas', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ concepto, presupuesto, pagado })
+  })
 }
 
 // Actualizar
@@ -43,20 +38,16 @@ export async function actualizarFinanza(
   presupuesto: number,
   pagado: number
 ) {
-  const { error } = await supabase
-    .from('finanzas')
-    .update({ concepto, presupuesto, pagado })
-    .eq('id', id)
-
-  if (error) console.error(error)
+  await fetch('/api/finanzas', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, concepto, presupuesto, pagado })
+  })
 }
 
 // Eliminar
 export async function eliminarFinanza(id: string) {
-  const { error } = await supabase
-    .from('finanzas')
-    .delete()
-    .eq('id', id)
-
-  if (error) console.error(error)
+  await fetch(`/api/finanzas?id=${id}`, {
+    method: 'DELETE'
+  })
 }

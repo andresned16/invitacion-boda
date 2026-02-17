@@ -280,7 +280,7 @@ export default function Mesas() {
         <div className="flex flex-wrap gap-4 items-end mb-8">
 
           <div className="flex flex-col">
-            <label className="text-sm text-[#7a5c3e] mb-1">
+            <label className="text-sm text-[#7a5c3e] mb-1  text-left">
               Nombre de mesa
             </label>
             <input
@@ -293,7 +293,7 @@ export default function Mesas() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm text-[#7a5c3e] mb-1">
+            <label className="text-sm text-[#7a5c3e] mb-1  text-left">
               Cantidad
             </label>
             <input
@@ -331,13 +331,13 @@ export default function Mesas() {
 
             <h3 className="text-lg font-semibold text-[#7a5c3e] text-left mb-4">
 
-              Buscar
+              Buscador
             </h3>
 
             <div className="flex flex-col md:flex-row gap-3 items-start md:items-end">
               <div className="flex flex-col w-full md:w-96">
-                <label className="text-sm text-[#7a5c3e] mb-1">
-                  Buscar mesa, familia o persona
+                <label className="text-sm text-[#7a5c3e] mb-1  text-left">
+                  Nombre de mesa, familia o persona
                 </label>
                 <input
                   type="text"
@@ -372,7 +372,7 @@ export default function Mesas() {
             className="bg-[#fffaf6] p-5 rounded-2xl border shadow"
           >
             <div className="flex justify-between items-center mb-3">
-              <h3 className="font-semibold">
+              <h3 className="font-semibold text-[#7a5c3e]">
                 {mesa.nombre} ({mesa.invitados.length}/{mesa.capacidad})
               </h3>
 
