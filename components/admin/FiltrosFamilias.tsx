@@ -61,7 +61,7 @@ export default function FiltrosFamilias({
 
         {/* Buscador */}
         <div className="flex-1">
-          <label className="block text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1 text-[#5C4632]">
             Buscar
           </label>
           <input
@@ -100,7 +100,7 @@ export default function FiltrosFamilias({
 
           {/* Estado */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1 text-[#5C4632]">
               Estado
             </label>
             <select
@@ -116,7 +116,7 @@ export default function FiltrosFamilias({
 
           {/* Cupos */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1 text-[#5C4632]">
               Cupos
             </label>
             <select
@@ -132,7 +132,7 @@ export default function FiltrosFamilias({
 
           {/* Invita */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1 text-[#5C4632]">
               Invita
             </label>
             <select
@@ -148,7 +148,7 @@ export default function FiltrosFamilias({
 
           {/* Orden */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1 text-[#5C4632]">
               Ordenar por
             </label>
             <select
@@ -165,7 +165,7 @@ export default function FiltrosFamilias({
 
           {/* Filas */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1 text-[#5C4632]">
               Filas
             </label>
             <select
