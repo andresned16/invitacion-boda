@@ -449,8 +449,59 @@ export default function AdminPage() {
 
 
             </main>
+            {/*  Imagen Flores */}
+            <div className="fade-up flex justify-center my-8">
+                <img
+                    src="/images/floresColor3.png"
+                    alt="Decoración Admin"
+                    className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+                />
+            </div>
             <FechaLimiteConfirmacion />
+            {/*  Imagen Flores2 */}
+            <div className="fade-up flex justify-center my-8">
+                <img
+                    src="/images/floresPano.png"
+                    alt="Decoración Admin"
+                    className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+                />
+            </div>
             <Mesas />
+            {/*  Imagen Linea */}
+            <div className="fade-up flex justify-center my-8">
+                <img
+                    src="/images/linea.png"
+                    alt="Decoración Admin"
+                    className="
+      w-[85%]
+      sm:w-[70%]
+      md:w-[420px]
+      lg:w-[360px]
+      xl:w-[320px]
+      2xl:w-[280px]
+      object-contain
+      opacity-80
+    "
+                />
+            </div>
             <FinanzasPanel />
         </Decoracion >
 

@@ -336,7 +336,7 @@ export default function FinanzasPanel() {
   }
 
   return (
-    <div className="mt-12 bg-[#fffaf6] p-6 rounded-2xl shadow-md border border-[#e8dfd6]">
+    <div className="mt-12 bg-[#fdfaf6] p-6 rounded-2xl shadow-md border border-[#e8dfd6]">
       <h2 className="text-2xl font-bentinck text-[#7a5c3e] text-center mb-4">
         Panel Financiero
       </h2>
