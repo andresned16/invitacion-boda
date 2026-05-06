@@ -160,7 +160,7 @@ export default function InvitacionPage() {
     "
           />
         </div>
-        <Itinerario />
+        <Menu />
         {/* 🌸 Imagen panorámica flores */}
         <div className="fade-up flex justify-center my-8">
           <img
@@ -178,7 +178,7 @@ export default function InvitacionPage() {
     "
           />
         </div>
-        <Menu />
+        <Itinerario />
         {/*  Imagen Linea */}
         <div className="fade-up flex justify-center my-8">
           <img
