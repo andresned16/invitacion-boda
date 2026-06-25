@@ -89,7 +89,7 @@ export default function Menu() {
               'Gulash  de res',
               'Rollo de pollo',
               'Ensalada Deliciosa',
-              'Soda de frutos amarillos',
+              'Soda de frutas',
             ].map((item, i) => (
               <div key={i} className="flex items-center justify-center gap-3">
                 <span className="w-6 h-[1px] bg-[#c6a77d]"></span>
