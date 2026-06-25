@@ -87,6 +87,7 @@ export default function Menu() {
               'Arroz Rissoto seco al limón',
               'Puré de papa blanca',
               'Gulash  de res',
+              'Rollo de pollo',
               'Ensalada Deliciosa',
               'Soda de frutos amarillos',
             ].map((item, i) => (
